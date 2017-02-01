@@ -9,7 +9,6 @@ class EnterpriseController extends Controller
     //
     public function newEnterprise()
     {
-
     	return view('new_enterprise');
     }
 
