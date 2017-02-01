@@ -108,7 +108,7 @@ return [
     */
 
     'menu' => [
-        'Menú principal',
+        'MENÚ PRINCIPAL',
         [
             'text' => 'Blog',
             'url'  => 'admin/blog',
@@ -140,7 +140,28 @@ return [
                 ],
 
             ],
-        ],        
+        ],
+        [
+            'text'    => 'Mantenedor de Clientes',
+            'icon'    => 'tags',
+            'permission'     => 'manage-enterprises',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo Cliente',
+                    'icon'    => 'chevron-right',
+                    'url'  => 'admin/new_client',
+                    /*'permission'  => 'create-enterprise',*/
+                ],
+                [
+                    'text'    => 'Visualizar Clientes',
+                    'icon'    => 'chevron-right',
+                    'url'     => 'admin/edit_enterprise',
+                    /*'permission'     => 'edit-enterprise',*/
+                ],
+
+            ],
+        ],
+
         [
             'text'    => 'Mantenedor de usuarios',
             'icon'    => 'user',
@@ -217,7 +238,7 @@ return [
                 ],
             ],
         ],         
-        'ACCOUNT SETTINGS',
+        'PERFIL DEL USUARIO',
         [
             'text' => 'Profile',
             'url'  => 'admin/settings',
