@@ -158,20 +158,40 @@ return [
                     'url'     => 'admin/edit_enterprise',
                     /*'permission'     => 'edit-enterprise',*/
                 ],
+                [
+                    'text'    => 'Carga masiva de clientes',
+                    'icon'    => 'chevron-right',
+                    'url'     => 'admin/edit_enterprise',
+                    /*'permission'     => 'edit-enterprise',*/
+                ],                
 
             ],
         ],
-
         [
-            'text'    => 'Mantenedor de usuarios',
-            'icon'    => 'user',
+            'text'    => 'Gestión Crediticia',
+            'icon'    => 'credit-card',
             'submenu' => [
                 [
-                    'text' => 'Level One',
+                    'text' => 'Generar nuevo crédito',
                     'url'  => '#',
                 ],
                 [
-                    'text'    => 'Level One',
+                    'text'    => 'Tasas de Interés',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Nueva tasa',
+                            'url'  => '#',
+                        ],
+                        [
+                            'text'    => 'Listado de tasas',
+                            'url'     => '#',
+                        ],
+                    ],
+                ],  
+                               
+                [
+                    'text'    => 'Morosidad',
                     'url'     => '#',
                     'submenu' => [
                         [
@@ -195,11 +215,78 @@ return [
                     ],
                 ],
                 [
-                    'text' => 'Level One',
+                    'text'    => 'Planes de crédito',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Level Two',
+                            'url'  => '#',
+                        ],
+                        [
+                            'text'    => 'Level Two',
+                            'url'     => '#',
+                            'submenu' => [
+                                [
+                                    'text' => 'Level Three',
+                                    'url'  => '#',
+                                ],
+                                [
+                                    'text' => 'Level Three',
+                                    'url'  => '#',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'text'    => 'Bases de Cálculo',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'Level Two',
+                            'url'  => '#',
+                        ],
+                        [
+                            'text'    => 'Level Two',
+                            'url'     => '#',
+                            'submenu' => [
+                                [
+                                    'text' => 'Level Three',
+                                    'url'  => '#',
+                                ],
+                                [
+                                    'text' => 'Level Three',
+                                    'url'  => '#',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],                
+            ],
+        ], 
+        [
+            'text'    => 'Mantenedor de usuarios',
+            'icon'    => 'user',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo usuario',
+                    'url'  => '#',
+                ],   
+                [
+                    'text' => 'Listado de usuarios',
                     'url'  => '#',
                 ],
+                [
+                    'text' => 'Registro de accesos',
+                    'url'  => '#',
+                ], 
+                [
+                    'text' => 'Misceláneos',
+                    'url'  => '#',
+                ],                                
             ],
-        ],  
+        ],
+       
         [
             'text'    => 'Mantenedor de Canales',
             'icon'    => 'edit',
