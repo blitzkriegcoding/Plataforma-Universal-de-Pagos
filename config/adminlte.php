@@ -173,18 +173,22 @@ return [
             'submenu' => [
                 [
                     'text' => 'Generar nuevo crédito',
-                    'url'  => '#',
+                    'icon'    => 'chevron-right',
+                    'url'     => 'admin/new_credit',
                 ],
                 [
                     'text'    => 'Tasas de Interés',
                     'url'     => '#',
+                    'icon'    => 'chevron-right',
                     'submenu' => [
                         [
                             'text' => 'Nueva tasa',
+                            'icon'    => 'chevron-right',
                             'url'  => '#',
                         ],
                         [
                             'text'    => 'Listado de tasas',
+                            'icon'    => 'chevron-right',
                             'url'     => '#',
                         ],
                     ],

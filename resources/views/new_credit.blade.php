@@ -29,7 +29,7 @@
 			<div class="form-group">		    
 				{!!Form::label('rut_cliente', 'RUT del Cliente: ',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('rut_cliente', '', ['id' => 'rut_cliente', 'class' => 'form-control', 'placeholder' => '12345678-9']); !!}		      
+				{!! Form::text('rut_cliente', '', ['id' => 'rut_cliente', 'class' => 'form-control', 'placeholder' => 'ejm. 12345678-9']); !!}		      
 				</div>
 				{!!Form::label('paquete', 'Nombre del Crédito:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
@@ -40,51 +40,68 @@
 				</div>						
 			</div>
 			<div class="form-group">		    
-				{!!Form::label('apellido_cliente', 'Apellidos del cliente:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('cantidad_cuotas', 'Cantidad de cuotas:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('apellido_cliente', '', ['id' => 'apellido_cliente', 'class' => 'form-control', 'placeholder' => 'Pérez']); !!}		      
+				{!! Form::text('cantidad_cuotas', '', ['id' => 'cantidad_cuotas', 'class' => 'form-control', 'placeholder' => 'ejm. 24','maxlength' =>'4']); !!}		      
 				</div>
 
-				{!!Form::label('telefono_cliente', 'Teléfono del Cliente:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('fecha_vencimiento', 'Vencimiento del contrato:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('telefono_cliente', '', ['id' => 'telefono_cliente', 'class' => 'form-control', 'placeholder' =>'+56(2)23456789']); !!}		      
+				{!! Form::text('fecha_vencimiento', '', ['id' => 'fecha_vencimiento', 'class' => 'form-control', 'placeholder' =>'DD/MM/AAAA']); !!}		      
 				</div>
 				<div class="col-sm-1">
 					<br>
 				</div>
 			</div>
 			<div class="form-group">		    
-				{!!Form::label('email_cliente', 'Email del Cliente:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('total_credito', 'Monto total crédito:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('email_cliente', '', ['id' => 'email_cliente', 'class' => 'form-control', 'placeholder' =>'email_cliente@mail.com']); !!}		      
+				{!! Form::text('total_credito', '', ['id' => 'total_credito', 'class' => 'form-control', 'placeholder' =>' ejm. 10.000.000']); !!}		      
 				</div>
-				{!!Form::label('direccion_cliente', 'Empresa / Cliente:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('nro_credito', 'Número de Crédito (Profin):',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::select('empresa_cliente', ['1' => 'AFA-CHILE', '2' => 'CHILE-AFA'], null, ['placeholder' => 'Seleccione empresa']); !!}
+				{!! Form::text('nro_credito', '', ['id' => 'nro_credito', 'class' => 'form-control', 'placeholder' =>'ejm. 691']); !!}		      
 				</div>
 				<div class="col-sm-1">
 					<br>
 				</div>						
 		  	</div>
-			<div class="form-group">	    
-
-				{!!Form::label('direccion_cliente', 'Dirección del cliente:',['class' => 'col-sm-2 control-label'])!!}
+			<div class="form-group">		    
+				{!!Form::label('interes_diario', 'Interés diario (%):',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::textarea('direccion_cliente','' ,['id' => 'direccion_cliente', 'rows' => 4, 'cols'=>35, 'placeholder' => 'Miraflores 321, Edf Marsella, Piso 1, Local 1-A "Los Pellines"' ]); !!}
+				{!! Form::text('interes_diario', '', ['id' => 'interes_diario', 'class' => 'form-control', 'placeholder' =>' ejm. 2.5']); !!}		      
+				</div>
+				{!!Form::label('interes_mensual', 'Interés mensual (%):',['class' => 'col-sm-2 control-label'])!!}
+				<div class="col-sm-3">
+				{!! Form::text('interes_mensual', '', ['id' => 'interes_mensual', 'class' => 'form-control', 'placeholder' =>'ejm. 0.1']); !!}		      
 				</div>
 				<div class="col-sm-1">
 					<br>
-				</div>						
-		  	</div>		  	
+				</div>	
+				<div class="col-sm-1">
+					<br>
+				</div>										
+		  	</div>
+			<div class="row">
+				<div class="col-sm-1">
+					<br>
+				</div>	
+			</div>		  		  	
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					{!! Form::submit('Guardar datos', ['class' => 'btn btn-primary']) !!}
-				</div>
+				<div class="row">
+					<div class="col-sm-offset-4 col-sm-1">
+						{!! Form::button('Generar borrador', ['class' => 'btn btn-warning']) !!}
+					</div>	
+					<div class="col-sm-offset-1 col-sm-1">
+						{!! Form::submit('Generar crédito', ['class' => 'btn btn-primary']) !!}
+					</div>						
+				</div>			
 			</div>
 
 			{!! csrf_field() !!}
 
     	{!! Form::close() !!}
 		</div>
-	</div>		    
+	</div>
+	@include('custom_includes.datepicker_libs')
 @stop
