@@ -16,6 +16,8 @@
     "vue-resource": "^1.0.3"
   },
   "dependencies": {
+    "chosen": "0.0.2",
+    "chosen-js": "^1.6.2",
     "datatables": "^1.10.13"
   }
 }
