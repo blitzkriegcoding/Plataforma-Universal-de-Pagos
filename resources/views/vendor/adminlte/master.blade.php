@@ -17,6 +17,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chosen.min.css') }}">
     
     @if(config('adminlte.plugins.datatables'))
         <!-- DataTables -->
@@ -39,6 +40,7 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
 
 
 <script src="{{ asset('js/custom_scripts.js') }}"></script>
