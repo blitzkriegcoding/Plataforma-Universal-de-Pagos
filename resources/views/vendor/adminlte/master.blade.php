@@ -16,8 +16,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/chosen.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.standalone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom_styles.css') }}">
+       
     
     @if(config('adminlte.plugins.datatables'))
         <!-- DataTables -->
@@ -40,9 +42,8 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
-<script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
-
-
+<script src="{{ asset('js/select2.full.min.js') }}"></script>
+<script src="{{ asset('js/i18n/es.js') }}"></script>
 <script src="{{ asset('js/custom_scripts.js') }}"></script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->

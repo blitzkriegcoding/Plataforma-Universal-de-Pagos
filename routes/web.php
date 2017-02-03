@@ -39,7 +39,11 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 
 	Route::post('create_credit', ['as' => 'admin.create_credit', 'uses' => 'PlanQuoteController@createCredit']);
 
+	# Para consultar cliente por rut para el select2
+	
+
 
 
 
 });
+	Route::post('get_client_by_rut', ['as' => 'admin.get_client_by_rut', 'uses' => 'ClientController@getClientByRut']);

@@ -32,4 +32,10 @@ class ClientController extends Controller
     	flash('Cliente registrado con éxito', 'success');
     	return redirect()->route('admin.new_client');
     }
+
+    public function getClientByRut(Request $request)
+    {
+    	return Cliente::getClientByRut($request->rut_cliente)->toJson();
+    	
+    }
 }
