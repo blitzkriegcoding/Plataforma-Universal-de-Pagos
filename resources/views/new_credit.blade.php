@@ -57,7 +57,7 @@
 				</div>			
 				{!!Form::label('total_credito', 'Monto total crédito:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('total_credito', '', ['id' => 'total_credito', 'class' => 'form-control', 'placeholder' =>' ejm. 10.000.000']); !!}		      
+				{!! Form::text('total_credito', '', ['id' => 'total_credito', 'class' => 'form-control', 'placeholder' =>' ejm. 10.000.000', 'maxlength' =>'15']); !!}		      
 				</div>
 
 				<div class="col-sm-1">
@@ -75,26 +75,29 @@
 				</div>
 				<div class="col-sm-1">
 					<br>
-				</div>	
-				<div class="col-sm-1">
-					<br>
-				</div>										
+				</div>											
 		  	</div>
 			<div class="form-group">
 				{!!Form::label('interes_mensual', 'Interés mensual (%):',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
 				{!! Form::text('interes_mensual', '', ['id' => 'interes_mensual', 'class' => 'form-control', 'placeholder' =>'ejm. 0.1']); !!}		      
 				</div>
-
-				<div class="col-sm-1">
-					<br>
-				</div>										
-		  	</div>		  	
-			<div class="row">
+				{!!Form::label('base_calculo', 'Base de Cálculo:',['class' => 'col-sm-2 control-label'])!!}
+				<div class="col-sm-3">
+				{!! Form::select('base_calculo', [], null, ['placeholder' => 'Seleccione base', 'class' => 'form-control']); !!}
+				</div>
 				<div class="col-sm-1">
 					<br>
 				</div>	
-			</div>		  		  	
+				<div class="col-sm-1">
+					<br>
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col-sm-1">
+					<br>
+				</div>					
+			</div>
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-offset-4 col-sm-1">

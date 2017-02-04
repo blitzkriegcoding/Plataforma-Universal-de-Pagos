@@ -44,6 +44,8 @@
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 <script src="{{ asset('js/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/i18n/es.js') }}"></script>
+<script src="{{ asset('js/jquery.inputmask.bundle.js') }}"></script>
+
 <script src="{{ asset('js/custom_scripts.js') }}"></script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->

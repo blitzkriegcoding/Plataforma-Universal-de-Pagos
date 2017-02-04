@@ -1,16 +1,17 @@
    $(document).ready(function(){
 	    $('#fecha_vencimiento').datepicker({
+	        language: "es",
 	        todayBtn: true,
 	        clearBtn: true,
-	        language: "es",
 	        autoclose: true
 	    });  
 	    template = function(data, container) {
 
 	    }
 		$("#rut_cliente").select2({
+		language: "es",
 		  ajax: {
-		    url: "../get_client_by_rut",
+		    url: "get_client_by_rut",
 		    dataType: 'json',
 		    method: 'post',
 		    delay: 250,
@@ -48,6 +49,14 @@
 		  	return data.text;
 		  }  // omitted for brevity, see the source of this page
 		});
-
+		$('#total_credito').inputmask("numeric", {
+		    radixPoint: ",",
+		    groupSeparator: ".",
+		    digits: 2,
+		    autoGroup: true,
+		    prefix: '$ ', //Space after $, this will not truncate the first character.
+		    rightAlign: false,
+		    oncleared: function () { self.Value(''); }
+		});
 
    });
