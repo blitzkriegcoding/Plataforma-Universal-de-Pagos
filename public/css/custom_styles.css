@@ -1,1 +1,6 @@
 #paquete{text-transform:uppercase}
+
+.session_expired {
+	color: #ccc;
+	font-weight: bold;
+}
