@@ -11,10 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
@@ -41,9 +37,4 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', ['as' => 'admin.get_client_by_rut', 'uses' => 'ClientController@getClientByRut']);
-	
-
-
-
-
 });

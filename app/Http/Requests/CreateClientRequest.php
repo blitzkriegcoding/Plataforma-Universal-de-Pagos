@@ -31,7 +31,6 @@ class CreateClientRequest extends FormRequest
             'email_cliente' => 'required|max:50|email',
             'direccion_cliente' => 'required|max:255'
         ];
-
     }
 
     public function messages()
