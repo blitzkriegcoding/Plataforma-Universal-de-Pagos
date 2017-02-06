@@ -13,7 +13,7 @@ class LogsCargasCrediticias extends Migration
      */
     public function up()
     {
-        Schema::create('log_cargas_crediticias', function (Blueprint $table) {
+        Schema::create('logs_cargas_crediticias', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             

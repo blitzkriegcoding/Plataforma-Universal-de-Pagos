@@ -27,13 +27,10 @@ class LotesCreditos extends Migration
             $table->string('estado_cuota', 255);
             $table->string('rut_cliente', 255);
             $table->integer('nro_credito')->unsigned();
-            $table->bigInteger('id_carga');
+            $table->integer('id_carga')->unsigned();
             $table->dateTime('fecha_hora_carga');
 
-
             $table->foreign('id_carga')->references('id_carga')->on('logs_cargas_crediticias')->onDelete('cascade')->onUpdate('cascade');
-            # $table->foreign('id_empresa')->references('id_empresa')->on('empresas')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

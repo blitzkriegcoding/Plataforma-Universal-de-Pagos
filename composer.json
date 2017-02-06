@@ -14,7 +14,7 @@
         "ignasbernotas/laravel-model-generator": "^1.1",
         "jeroennoten/laravel-adminlte": "^1.17",
         "laracasts/flash": "^2.0",
-        "nesbot/carbon": "^1.22"
+        "nesbot/carbon": "^1.22",        
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
