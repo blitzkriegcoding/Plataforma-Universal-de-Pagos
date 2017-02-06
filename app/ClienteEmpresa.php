@@ -10,6 +10,7 @@ class ClienteEmpresa extends Model
     //
     protected $table = 'clientes_empresas';
     protected $fillable = ['rut_cliente', 'id_empresa'];
+    protected $primaryKey = 'id_cliente_cuota';
     public $timestamps = false;
 
     public function Cliente()

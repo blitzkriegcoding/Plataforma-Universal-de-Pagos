@@ -9,7 +9,8 @@ class Cuota extends Model
 {
     protected $table = 'cuotas';
     protected $fillable = ['nro_cuota', 'valor_cuota', 'activa', 'status_cuota', 'fecha_nacimiento', 'fecha_pago_efectivo', 'id_plan_cuota', 'en_proceso', 'bill_number'];
-
+    protected $primaryKey = 'id_cuota';
+    protected $timestamps = false;
     public function PlanCuota()
     {
     	return $this->hasMany('Cuota');

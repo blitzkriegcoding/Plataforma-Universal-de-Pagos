@@ -157,12 +157,6 @@ return [
                     'icon'    => 'chevron-right',
                     'url'     => 'admin/edit_enterprise',
                     /*'permission'     => 'edit-enterprise',*/
-                ],
-                [
-                    'text'    => 'Carga masiva de clientes',
-                    'icon'    => 'chevron-right',
-                    'url'     => 'admin/edit_enterprise',
-                    /*'permission'     => 'edit-enterprise',*/
                 ],                
 
             ],
@@ -176,6 +170,23 @@ return [
                     'icon'    => 'chevron-right',
                     'url'     => 'admin/new_credit',
                 ],
+                [
+                    'text'    => 'Carga Masiva',
+                    'url'     => '#',
+                    'icon'    => 'chevron-right',
+                    'submenu' => [
+                        [
+                            'text' => 'Nueva carga crediticia',
+                            'icon'    => 'chevron-right',
+                            'url'  => '#',
+                        ],
+                        [
+                            'text'    => 'Listado de cargas crediticias',
+                            'icon'    => 'chevron-right',
+                            'url'     => '#',
+                        ],
+                    ],
+                ],                
                 [
                     'text'    => 'Tasas de Interés',
                     'url'     => '#',

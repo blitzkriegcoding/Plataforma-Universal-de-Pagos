@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 
 	Route::get('new_credit', ['as' => 'admin.new_credit', 'uses' => 'PlanQuoteController@newCredit']);
 
-	Route::get('massive_upload_credits', ['as' => 'admin.massive_upload_credits'])
+	Route::get('massive_upload_credits', ['as' => 'admin.massive_upload_credits', 'uses' => 'MassiveCreditLoaderController@newLoad']);
 
 	# Rutas por post
 	Route::post('create_enterprise', ['as' => 'admin.create_enterprise', 'uses' => 'EnterpriseController@createEnterprise']);
@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_credit', ['as' => 'admin.create_credit', 'uses' => 'PlanQuoteController@createCredit']);
 
 
+	Route::post('upload_credits', ['as' => 'admin.upload_credits', 'uses' => 'MassiveCreditLoaderController@uploadFile']);
 
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', ['as' => 'admin.get_client_by_rut', 'uses' => 'ClientController@getClientByRut']);

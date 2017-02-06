@@ -10,7 +10,8 @@ class InteresDiario extends Model
     //
     protected $table = 'intereses_diarios';
     protected $fillable = ['valor_interes'];
-    public $primaryKey = 'id_interes_diario';
+    protected $primaryKey = 'id_interes_diario';
+    protected $timestamps = false;
 
     public function InteresCuota()
     {

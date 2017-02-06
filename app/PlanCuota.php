@@ -13,7 +13,8 @@ class PlanCuota extends Model
     //
     protected $table = 'plan_cuotas';
     protected $fillable = ['id_cliente_cuota', 'paquete', 'cantidad_cuotas','fecha_termino','nro_credito', 'total_credito'];
-
+    protected $primaryKey = 'id_plan_cuota';
+    protected $timestamps = false;
     public function ClienteEmpresa()
     {
     	return $this->belongsTo('App\ClienteEmpresa');
@@ -29,7 +30,7 @@ class PlanCuota extends Model
             'cantidad_cuotas' => $data_credit->cantidad_cuotas, 'fecha_termino_contrato' => $data_credit->fecha_vencimiento, 
             'nro_credito' => $data_credit->nro_credito, 'total_credito' => $data_credit->total_credito]);
 
-        
+
 
     }
 

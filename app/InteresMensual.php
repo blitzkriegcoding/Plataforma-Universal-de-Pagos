@@ -8,7 +8,8 @@ class InteresMensual extends Model
 {
     protected $table = 'intereses_mensuales';
     protected $fillable = ['valor'];
-    public $primaryKey = 'id_interes_mensual';
+    protected $primaryKey = 'id_interes_mensual';
+    protected $timestamps = false;
 
     public function InteresCuota()
     {
