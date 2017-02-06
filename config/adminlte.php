@@ -171,17 +171,17 @@ return [
                     'url'     => 'admin/new_credit',
                 ],
                 [
-                    'text'    => 'Carga Masiva',
+                    'text'    => 'Cargas Masivas',
                     'url'     => '#',
                     'icon'    => 'chevron-right',
                     'submenu' => [
                         [
-                            'text' => 'Nueva carga crediticia',
+                            'text' => 'Nueva carga masiva',
                             'icon'    => 'chevron-right',
-                            'url'  => '#',
+                            'url'  => 'admin/massive_upload_credits',
                         ],
                         [
-                            'text'    => 'Listado de cargas crediticias',
+                            'text'    => 'Histórico de cargas masivas',
                             'icon'    => 'chevron-right',
                             'url'     => '#',
                         ],

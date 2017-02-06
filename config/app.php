@@ -1,7 +1,9 @@
 <?php
 
 return [
-
+    // 'fileDestinationPath' => 'uploads' ,
+    // 'allowedFileTypes' => 'xls,xlsx,csv,txt',
+    // 'maxFileSize' => 1000*200,
     /*
     |--------------------------------------------------------------------------
     | Application Name
