@@ -20,33 +20,30 @@ class MassiveCreditLoaderController extends Controller
     public function uploadFile(UploadFileRequest $request)
     {
     	# dd($request->lote_credito);
-    	$bulk = [];
+    	#$bulk = [];
     	$path_file = $request->file('lote_credito')->getRealPath();
     	$data_file = Excel::load($path_file, function($reader){})->get();
     	if(!empty($data_file) && $data_file->count())
     	{
-    		foreach($data_file as $value =>$d)
+    		foreach($data_file as $key => $value)
     		{
-    			print_r($d->toArray());
-    		// 	if(!empty($value))
-    		// 	{
-    		// 		foreach($value as $v)
-    		// 		{
-						// $bulk[] = [	'nro_cuota' 		=> $value['NRO_CUOTA'], , 
-		    // 						'fecha_vencimiento' => $value['FECHA_VENCIMIENTO'],
-		    // 						'interes'			=> $value['INTERES'],
-		    // 						'amortizacion'		=> $value['AMORTIZACION'],
-		    // 						'valor_cuota'		=> $value['VALOR_CUOTA'],
-		    // 						'saldo_insoluto'	=> $value['SALDO_INSOLUTO'],
-		    // 						'estado'			=> $value['ESTADO'],
-		    // 						'tipo_cuota'		=> $value['TIPO_CUOTA'],
-		    // 						'fecha_pago'		=> $value['FECHA_PAGO'],
-		    // 						'rut_cliente'		=> $value['RUT_CLIENTE'],
-		    // 						'nro_credito'		=> $value['NRO_CREDITO'],
-		    // 						'nombres_cliente'	=> $value['NOMBRES_CLIENTE'],
-		    // 						'apellidos_cliente'	=> $value['APELLIDOS_CLIENTE']];
-    		// 		}
-    		// 	}
+    			print_r($value->toArray()."<br>");
+
+
+						// $bulk[] = [	'nro_cuota' 		=> $d['0'],
+		    // 						'fecha_vencimiento' => $d['1'],
+		    // 						'interes'			=> $d['2'],
+		    // 						'amortizacion'		=> $d['3'],
+		    // 						'valor_cuota'		=> $d['4'],
+		    // 						'saldo_insoluto'	=> $d['5'],
+		    // 						'estado'			=> $d['6'],
+		    // 						'tipo_cuota'		=> $d['7'],
+		    // 						'fecha_pago'		=> $d['8'],
+		    // 						'rut_cliente'		=> $d['9'],
+		    // 						'nro_credito'		=> $d['10'],
+		    // 						'nombres_cliente'	=> $d['11'],
+		    // 						'apellidos_cliente'	=> $d['12']];
+
     		}
     		dd($bulk);
     	}
