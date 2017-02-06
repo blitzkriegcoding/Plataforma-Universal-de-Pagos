@@ -13,10 +13,10 @@ class LotesCreditos extends Migration
      */
     public function up()
     {
-        Schema::create('log_cargas_crediticias', function (Blueprint $table) {
+        Schema::create('lotes_creditos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
-            
+
             $table->increments('id_lote');
             $table->integer('nro_cuota')->unsigned();
             $table->date('fecha_vencimiento');
