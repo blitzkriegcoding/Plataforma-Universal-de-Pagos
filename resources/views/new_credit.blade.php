@@ -55,7 +55,7 @@
 				<div class="col-sm-3">
 				{!! Form::text('fecha_vencimiento', '', ['id' => 'fecha_vencimiento', 'class' => 'form-control', 'placeholder' =>'DD/MM/AAAA']); !!}		      
 				</div>			
-				{!!Form::label('total_credito', 'Monto total crédito:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('total_credito', 'Total a financiar:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
 				{!! Form::text('total_credito', '', ['id' => 'total_credito', 'class' => 'form-control', 'placeholder' =>' ejm. 10.000.000', 'maxlength' =>'15']); !!}		      
 				</div>

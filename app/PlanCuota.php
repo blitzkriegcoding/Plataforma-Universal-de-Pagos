@@ -3,7 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
+use App\InteresCuota;
+use App\InteresDiario;
+use App\InteresMensual;
+use App\Cuota;
 class PlanCuota extends Model
 {
     //
@@ -17,6 +21,16 @@ class PlanCuota extends Model
     public function Cuota()
     {
     	return $this->hasMany('App\Cuota');
+    }
+
+    public static function addNewCredit($data_credit)
+    {
+        $new_plan = PlanCuota::create(['id_client_cuota' => $data_credit->rut_cliente, 'paquete' => $data_credit->paquete, 
+            'cantidad_cuotas' => $data_credit->cantidad_cuotas, 'fecha_termino_contrato' => $data_credit->fecha_vencimiento, 
+            'nro_credito' => $data_credit->nro_credito, 'total_credito' => $data_credit->total_credito]);
+
+        
+
     }
 
     
