@@ -25,7 +25,7 @@ class UploadFileRequest extends FormRequest
     {
         return [
             //
-            'lote_credito' => "required|file|mimetypes:application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain"
+            'lote_credito' => "required|file|mimetypes:application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             # 'lote_credito' => "required|file|mimes:xls,xlsx,csv,txt",
 
         ];
