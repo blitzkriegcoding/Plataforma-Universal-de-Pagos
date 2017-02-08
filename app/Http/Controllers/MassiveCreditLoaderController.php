@@ -36,9 +36,9 @@ class MassiveCreditLoaderController extends Controller
     						'amortizacion'		=> $value['amortizacion'],
     						'valor_cuota'		=> $value['valor_cuota'],
     						'saldo_insoluto'	=> $value['saldo_insoluto'],
-    						'estado'			=> trim($value['estado']),
+    						'estado_cuota'		=> trim($value['estado_cuota']),
     						'tipo_cuota'		=> trim($value['tipo_cuota']),
-    						'fecha_pago'		=> $value['fecha_pago'],
+    						'fecha_pago'		=> NULL,
     						'rut_cliente'		=> $value['rut_cliente'],
     						'nro_credito'		=> $value['nro_credito'],
     						'nombres_cliente'	=> $value['nombres_cliente'],
@@ -46,12 +46,25 @@ class MassiveCreditLoaderController extends Controller
     		}
     		if(!empty($this->bulk))
     		{
-    			
+    			$works_fine = LogCargaCrediticia::createNewLog($this->bulk);
+                if($works_fine == TRUE)
+                {
+                    flash('El lote ha sido cargado satisfactoriamente', 'success');
+                    return back();
+                }
     		}
-    		
-    		#dd($this->bulk);
+            else
+            {
+                flash('Lote vacío o memoria insuficiente', 'error');
+                return back();
+            }
     	}
-    	flash('Lote vacío o con valores inválidos', 'error');
+        else
+        {
+            flash('Lote vacío o con valores inválidos', 'error');
+            return back();
+        }
+
 
     }
 

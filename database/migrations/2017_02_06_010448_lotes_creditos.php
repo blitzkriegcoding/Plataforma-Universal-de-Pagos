@@ -25,8 +25,12 @@ class LotesCreditos extends Migration
             $table->decimal('valor_cuota', 11, 2);
             $table->decimal('saldo_insoluto', 11, 2);
             $table->string('estado_cuota', 255);
+            $table->string('tipo_cuota', 255);
+            $table->date('fecha_pago')->nullable();
             $table->string('rut_cliente', 255);
             $table->integer('nro_credito')->unsigned();
+            $table->string('nombres_cliente', 255);
+            $table->string('apellidos_cliente', 255);
             $table->integer('id_carga')->unsigned();
             $table->dateTime('fecha_hora_carga');
 

@@ -9,7 +9,7 @@ class LogCargaCrediticia extends Model
     //
     protected $table = 'logs_cargas_crediticias';
     protected $fillable = ['fecha_hora_carga', 'hash_validacion', 'id_empresa', 'user_id'];
-    protected $timestamps = false;
+    public $timestamps = false;
     protected $primaryKey = 'id_carga';
 
     private $credit_bulk = [];
@@ -17,6 +17,17 @@ class LogCargaCrediticia extends Model
     public function LoteCredito()
     {
     	return $this->hasMany('LoteCredito','id_carga', 'id_carga');
+    }
+    public static function createNewLog($data_lote)
+    {
+        $works_fine = TRUE;
+        $new_log = ['fecha_hora_carga' => date('Y-m-d H:i:s'), 'hash_validacion' => bcrypt(date('Y-m-d H:i:s')), 'id_empresa' => 1, 'user_id' => \Auth::id()];
+        $log = self::create($new_log);
+        if(NULL != $log->id_carga)
+        {
+            $works_fine = LoteCredito::createNewLote($data_lote, $log->id_carga);            
+        }
+        return $works_fine;
     }
 
 
