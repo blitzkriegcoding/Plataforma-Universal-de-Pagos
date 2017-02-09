@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use LogCargaCrediticia;
+use App\LogCargaCrediticia;
 use App\Cliente;
+use App\ClienteEmpresa;
 class LoteCredito extends Model
 {
     //
@@ -34,38 +35,17 @@ class LoteCredito extends Model
                 $data_lote[$x]['id_carga'] = $id_carga;
     			$data_lote[$x]['fecha_hora_carga'] = $datetime;                
     		}
-    	}    	
-        self::insert($data_lote);
-        self::addNewClients($id_carga);
-        return TRUE;
+    	}
+
+        $result = self::insert($data_lote); 
+        session(['total_data_lote' => $count_data_lote]);   
+        # dd($count_data_lote);
+        return $result;
     }
 
-    public static function addNewClients($id_carga)
-    {
-        /*
-            Para determinar los clientes nuevos 
-            con el siguiente query
-            select t2.rut_cliente, t2.nombre_cliente, t2.apellido_cliente, 'mail@email.cl' as email_cliente, 
-            '+56(2)23456789' as telefono_cliente
-            from lotes_creditos t1
-            left join clientes t2 on(t1.rut_cliente = t2.rut_cliente COLLATE utf8_unicode_ci)
-            where t2.rut_cliente is null;            
-        */
 
-        $new_clients =  \DB::table('lotes_creditos as t1')
-                                ->select(\DB::raw("distinct trim(t1.rut_cliente) as rut_cliente, t1.nombres_cliente as nombre_cliente, t1.apellidos_cliente as apellido_cliente, 'mail@email.cl' as email_cliente, '+56(2)23456789' as telefono_cliente"))
-                                ->leftJoin('clientes as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
-                                ->whereNull('t2.rut_cliente')
-                                ->where('id_carga', '=', $id_carga)                                
-                                ->get()->toArray();
-        $f = function($value)
-        {
-            return (array)$value;
-        };
-        $array_new_clientes = array_map($f, $new_clients);
-        session(['clientes_nuevos' => count($array_new_clientes)]);
-        Cliente::insert($array_new_clientes);        
-    }
+
+
 
     public static function addNewClientQuotePlan($id_carga)
     {

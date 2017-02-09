@@ -9,6 +9,10 @@ use App\Http\Requests\UploadFileRequest;
 use App\LoteCredito;
 use App\LogCargaCrediticia;
 use Excel;
+use App\Cliente;
+use App\ClienteEmpresa;
+use App\PlanCuota;
+use App\Cuota;
 
 class MassiveCreditLoaderController extends Controller
 {
@@ -23,6 +27,7 @@ class MassiveCreditLoaderController extends Controller
     {
     	# dd($request->lote_credito);
     	$bulk = [];
+        $bulk_result = [];
     	$path_file = $request->file('lote_credito')->getRealPath();
     	$data_file = Excel::load($path_file, function($reader){})->get();
     	if(!empty($data_file) && $data_file->count())
@@ -46,11 +51,21 @@ class MassiveCreditLoaderController extends Controller
     		}
     		if(!empty($this->bulk))
     		{
-    			$works_fine = LogCargaCrediticia::createNewLog($this->bulk);
-                if($works_fine == TRUE)
+    			$log_id_carga = LogCargaCrediticia::createNewLog($this->bulk);
+                if(NULL != $log_id_carga)
                 {
-                    flash('El lote ha sido cargado satisfactoriamente', 'success');
-                    return back();
+                    $bulk_result['lote_credito']    = LoteCredito::createNewLote($this->bulk, $log_id_carga);
+                                       
+                    $bulk_result['clientes']        = Cliente::addNewClients($log_id_carga);
+                                        
+                    $bulk_result['cliente_empresa'] = ClienteEmpresa::associateClientsEnterprise($this->bulk, $log_id_carga);
+                    
+                    $bulk_result['plan_cuota']      = PlanCuota::addNewClientQuotePlan($log_id_carga);
+                                       
+                    $bulk_result['cuota']           = Cuota::addQuotes($log_id_carga);
+                    
+                    #session([$bulk_result]);
+                    return redirect()->route('admin.massive_upload_result');
                 }
     		}
             else
@@ -66,6 +81,12 @@ class MassiveCreditLoaderController extends Controller
         }
 
 
+    }
+
+    public function resultsLoad()
+    {
+        if(session() )
+        return view('result_massive_upload');
     }
 
 

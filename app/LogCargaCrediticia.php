@@ -20,16 +20,14 @@ class LogCargaCrediticia extends Model
     }
     public static function createNewLog($data_lote)
     {
-        $works_fine = TRUE;
+        $new_id_carga = NULL;
         $new_log = ['fecha_hora_carga' => date('Y-m-d H:i:s'), 'hash_validacion' => bcrypt(date('Y-m-d H:i:s')), 'id_empresa' => 1, 'user_id' => \Auth::id()];
         $log = self::create($new_log);
-        if(NULL != $log->id_carga)
+        if(NULL != $log->id_carga || !empty($log))
         {
-            $works_fine = LoteCredito::createNewLote($data_lote, $log->id_carga);            
+            $new_id_carga = $log->id_carga;
         }
-        return $works_fine;
+        session($new_log);
+        return $new_id_carga;
     }
-
-
-
 }

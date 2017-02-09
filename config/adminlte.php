@@ -181,7 +181,7 @@ return [
                             'url'  => 'admin/massive_upload_credits',
                         ],
                         [
-                            'text'    => 'Histórico de cargas masivas',
+                            'text'    => "Histórico de cargas\nmasivas",
                             'icon'    => 'chevron-right',
                             'url'     => '#',
                         ],

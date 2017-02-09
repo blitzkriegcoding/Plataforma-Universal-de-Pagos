@@ -22,5 +22,24 @@ class Cliente extends Model
     	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get();
     	return $clientes;
     }
-    
+    public static function addNewClients($id_carga)
+    {
+        $new_clients =  \DB::table('lotes_creditos as t1')
+                                ->select(\DB::raw("distinct trim(t1.rut_cliente) as rut_cliente, t1.nombres_cliente as nombre_cliente, t1.apellidos_cliente as apellido_cliente, 'mail@email.cl' as email_cliente, 
+                                    '+56(2)23456789' as telefono_cliente"))
+                                ->leftJoin('clientes as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+                                ->whereNull('t2.rut_cliente')
+                                ->where('id_carga', '=', $id_carga)                                
+                                ->get()->toArray();
+        #dd($new_clients);
+        $f = function($value)
+        {
+            return (array)$value;
+        };
+        $array_new_clientes = array_map($f, $new_clients);  
+        #dd(count($array_new_clientes));      
+        $result = self::insert($array_new_clientes);
+        session(['total_new_clients' => count($array_new_clientes)]);
+        return $result;
+    }    
 }

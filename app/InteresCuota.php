@@ -27,4 +27,9 @@ class InteresCuota extends Model
     	return $this->belongsTo('Cuota', 'id_cuota', 'id_cuota');
     }
 
+    public static function addInterest()
+    {
+        
+    }
+
 }
