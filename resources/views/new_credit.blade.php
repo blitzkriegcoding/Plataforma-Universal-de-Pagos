@@ -29,13 +29,12 @@
 			<div class="form-group">		    
 				{!!Form::label('rut_cliente', 'RUT del Cliente: ',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-4">
-				{!! Form::select('rut_cliente',[] ,NULL, ['id' => 'rut_cliente', 'class' => 'form-control', 'placeholder' => 'ejm. 12345678-9', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}		      
+				{!! Form::select('rut_cliente',[] ,NULL, ['id' => 'rut_cliente', 'class' => 'form-control', 'placeholder' => 'ejm. 12345678-9', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}
 				</div>
 				<div class="col-sm-1">
 					<br>
 				</div>						
 			</div>
-		
 			<div class="form-group">
 				{!!Form::label('paquete', 'Nombre del Crédito:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">

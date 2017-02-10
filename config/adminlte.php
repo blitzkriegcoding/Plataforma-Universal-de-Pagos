@@ -310,19 +310,19 @@ return [
             'text'    => 'Mantenedor de Canales',
             'icon'    => 'edit',
             'submenu' => [
-                            [
-                                'text' => 'Gestionar canales',
-                                'url'  => '#',
-                                'icon'    => 'chevron-right',  
-                            ],
+                            // [
+                            //     'text' => 'Gestionar canales',
+                            //     'url'  => '#',
+                            //     'icon'    => 'chevron-right',  
+                            // ],
                             [
                                 'text'    => 'Nuevo canal',
-                                'url'     => '#',
+                                'url'     => 'admin/new_channel',
                                 'icon'    => 'chevron-right',  
                             ],
                             [
                                 'text'    => 'Asociar canales',
-                                'url'     => '#',
+                                'url'     => 'admin/new_enterprise_channel',
                                 'icon'    => 'chevron-right',  
                             ],
                             [

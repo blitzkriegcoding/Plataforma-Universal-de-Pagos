@@ -139,13 +139,16 @@
 
 @section('select2')
     @if(Route::currentRouteName() == 'admin.new_credit')
-        <script src="{{ asset('js/select2.full.min.js') }}"></script>
-        <script src="{{ asset('js/i18n/es.js') }}"></script>
-        <script src="{{ asset('js/jquery.inputmask.bundle.js') }}"></script>
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
-        <script src="{{ asset('js/select2_custom.js') }}"></script>
+        <script src="{{ asset('js/select2_rut.js') }}"></script>
     @endif
+    @if(Route::currentRouteName() == 'admin.new_enterprise_channel')
+        <script src="{{ asset('js/custom_scripts.js') }}"></script>
+        <script src="{{ asset('js/select2_empresa.js') }}"></script>
+    @endif    
 @stop
+
+
 @section('datatables')
     @if(Route::currentRouteName() == 'admin.uploads_history_report')
         <script>
@@ -169,6 +172,4 @@
         });
         </script>    
     @endif
-
-
 @stop

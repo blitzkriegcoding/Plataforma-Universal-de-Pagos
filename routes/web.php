@@ -37,6 +37,9 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::get('massive_upload_result', ['as' => 'admin.massive_upload_result', 'uses' => 'MassiveCreditLoaderController@resultsLoad']);
 
 	Route::get('uploads_history_report',['as' => 'admin.uploads_history_report', 'uses' => 'MassiveCreditLoaderController@historyReport' ]);
+	Route::get('new_channel', ['as' => 'admin.new_channel', 'uses' => 'ChannelController@newChannel']);
+
+	Route::get('new_enterprise_channel', ['as' => 'admin.new_enterprise_channel', 'uses' => 'EnterpriseChannelController@newAssociation']);
 
 	# Rutas por post #
 	Route::post('create_enterprise', ['as' => 'admin.create_enterprise', 'uses' => 'EnterpriseController@createEnterprise']);
@@ -45,11 +48,17 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('update_client', ['as' => 'admin.update_client', 'uses' => 'ClientController@update_client']);
 	Route::post('create_credit', ['as' => 'admin.create_credit', 'uses' => 'PlanQuoteController@createCredit']);
 	Route::post('upload_credits', ['as' => 'admin.upload_credits', 'uses' => 'MassiveCreditLoaderController@uploadFile']);
-	
+	Route::post('create_channel', ['as' => 'admin.create_channel', 'uses' => 'ChannelController@createChannel']);
 
 
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', ['as' => 'admin.get_client_by_rut', 'uses' => 'ClientController@getClientByRut']);
+	
+	# Para consultar empresa por nombre para el select2
+	Route::post('get_enterprise_by_name', ['as' => 'admin.get_enterprise_by_name', 'uses' => 'EnterpriseController@getEnterpriseByName']);
+	
+	# Para consultar canales por numero para el select2
+	Route::post('get_channel_by_number', ['as' => 'admin.get_channel_by_number', 'uses' => 'ChannelController@getChannelByNumber']);
 
 	# Para consultar los históricos de carga 
 	Route::post('get_uploads_history',['as' => 'admin.get_uploads_history', 'uses' => 'MassiveCreditLoaderController@getUploadsHistory' ]);
