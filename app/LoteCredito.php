@@ -14,7 +14,7 @@ class LoteCredito extends Model
     protected $fillable = ['nro_cuota', 'fecha_vencimiento', 'interes', 'amortizacion', 'valor_cuota', 
     'saldo_insoluto', 'estado_cuota', 'tipo_cuota', 'fecha_pago', 'rut_cliente', 'nro_credito', 
     'nombres_cliente', 'apellidos_cliente', 'id_carga', 'fecha_hora_carga'];
-    protected $primaryKey = 'id_carga';
+    protected $primaryKey = 'id_lote';
     public $timestamps = false;
 
     public function LogCargaCrediticia()
@@ -36,25 +36,14 @@ class LoteCredito extends Model
     			$data_lote[$x]['fecha_hora_carga'] = $datetime;                
     		}
     	}
-
         $result = self::insert($data_lote); 
-        session(['total_data_lote' => $count_data_lote]);   
-        # dd($count_data_lote);
+        session(['total_data_lote' => $count_data_lote]);        
         return $result;
     }
 
-
-
-
-
-    public static function addNewClientQuotePlan($id_carga)
+    public static function deleteLote($id_carga)
     {
-        /*
-        select t1.id_cliente_cuota, 'GENERICO', count(t2.cuota) as cantidad_cuotas, max(t2.fecha_vencimiento), t2.nro_credito
-        from clientes_empresas t1
-        inner join lote_nominas_afa t2 on(t1.rut_cliente = t2.rut_cliente)
-        group by t1.rut_cliente, t1.id_cliente_cuota,t2.nro_credito order by t1.id_cliente_cuota asc;
-        */
+        self::where('id_carga', $id_carga)->delete();
     }
 
 

@@ -51,22 +51,22 @@ class MassiveCreditLoaderController extends Controller
     		}
     		if(!empty($this->bulk))
     		{
-    			$log_id_carga = LogCargaCrediticia::createNewLog($this->bulk);
-                if(NULL != $log_id_carga)
-                {
-                    $bulk_result['lote_credito']    = LoteCredito::createNewLote($this->bulk, $log_id_carga);
-                                       
-                    $bulk_result['clientes']        = Cliente::addNewClients($log_id_carga);
-                                        
-                    $bulk_result['cliente_empresa'] = ClienteEmpresa::associateClientsEnterprise($this->bulk, $log_id_carga);
-                    
-                    $bulk_result['plan_cuota']      = PlanCuota::addNewClientQuotePlan($log_id_carga);
-                                       
-                    $bulk_result['cuota']           = Cuota::addQuotes($log_id_carga);
-                    
-                    #session([$bulk_result]);
-                    return redirect()->route('admin.massive_upload_result');
+                \DB::beginTransaction();
+                try{
+                    $log_id_carga = LogCargaCrediticia::createNewLog($this->bulk);    
                 }
+                catch(Exception $e)
+                {
+                    \DB::rollBack();
+                    print_r($e);
+
+                    throw($e);
+                }
+                LoteCredito::createNewLote($this->bulk, $log_id_carga);
+                session(['id_carga' => $log_id_carga]);
+                \DB::commit();
+               
+                return redirect()->route('admin.authorize_commit_credits');
     		}
             else
             {
@@ -84,10 +84,53 @@ class MassiveCreditLoaderController extends Controller
     }
 
     public function resultsLoad()
-    {
-        if(session() )
-        return view('result_massive_upload');
+    {   
+        return view('result_massive_upload');    
+        // dd(session('qty_new_clients'));
+        // if(!is_null(session('qty_new_clients')) && !is_null(session('total_credit_plans'))  && !is_null(session('total_new_quotes')))
+        // {
+            
+        // }
+        // flash('No ha cargado correctamente las transacciones','error');
+        // return view('authorize_commit_credits');
     }
+
+    public function presetCommitOrRollBack()
+    {
+        return view('authorize_commit_credits');   
+    }
+
+    public function rollBackUpload()
+    {
+        session()->forget('nro_registros');
+        session()->forget('qty_new_clients');
+        session()->forget('total_credit_plans');
+        session()->forget('total_new_quotes');
+        session()->forget('fecha_hora_carga');
+        LogCargaCrediticia::deleteLog(session('id_carga'));
+        LoteCredito::deleteLote(session('id_carga'));
+        return redirect()->route('admin.massive_upload_credits');
+    }
+
+    public function commitUpload()
+    {        
+        Cliente::addNewClients(session('id_carga'));
+        ClienteEmpresa::associateClientsEnterprise($this->bulk, session('id_carga'));
+        PlanCuota::addNewClientQuotePlan(session('id_carga'));
+        Cuota::addQuotes(session('id_carga'));
+        return redirect()->route('admin.massive_upload_result');
+    }
+
+    public function historyReport()
+    {
+        return view('uploads_history_report');
+    }
+
+    public function getUploadsHistory()
+    {
+        return json_encode(['data' => LogCargaCrediticia::getHistory()]);
+    }
+
 
 
 }

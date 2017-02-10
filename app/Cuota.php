@@ -30,25 +30,55 @@ class Cuota extends Model
 
     public static function addQuotes($id_carga)
     {
+        $result = NULL;
+        // $new_quotes = \DB::table('lotes_creditos as t1')
+        //                 ->select(\DB::raw("t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, 
+        //                     t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, 
+        //                     NULL as bill_number"))
+        //                 ->join('plan_cuotas as t2','t1.nro_credito', '=', 't2.nro_credito')
+        //                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+        //                 ->where('id_carga', '=', $id_carga)
+        //                 ->orderBy('t2.nro_credito','asc')
+        //                 ->orderBy('t1.nro_cuota', 'asc')
+        //                 ->get()->toArray();
+        /*
+        select distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, 
+        NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number
+        from lotes_creditos t1 
+        inner join plan_cuotas t2 on (t1.nro_credito = t2.nro_credito)
+        inner join clientes_empresas t3 on (t2.id_cliente_cuota = t3.id_cliente_cuota)
+        left join cuotas t4 on (t2.id_plan_cuota = t4.id_plan_cuota)
+        where t4.nro_cuota is null
+        order by  t2.id_plan_cuota, t1.nro_cuota asc;
+        */
+
         $new_quotes = \DB::table('lotes_creditos as t1')
-                        ->select(\DB::raw("t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, 
-                            t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, 
-                            NULL as bill_number"))
-                        ->join('plan_cuotas as t2','t1.nro_credito', '=', 't2.nro_credito')
+                        ->select(\DB::raw("distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number"))
+                        ->join('plan_cuotas as t2', 't1.nro_credito','=','t2.nro_credito')
                         ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
-                        ->where('id_carga', '=', $id_carga)
-                        ->orderBy('t2.nro_credito','asc')
+                        ->leftJoin('cuotas as t4', 't2.id_plan_cuota', '=', 't4.id_plan_cuota')
+                        ->whereNull('t4.nro_cuota')
+                        ->orderBy('t2.id_plan_cuota', 'asc')
                         ->orderBy('t1.nro_cuota', 'asc')
                         ->get()->toArray();
-                        
-        $f = function($value)
+
+        if(count($new_quotes) > 0)
         {
-            return (array)$value;
-        };
-        $array_new_quotes = array_map($f, $new_quotes);
-        session(['total_new_quotes' => count($array_new_quotes)]);
-        $result = self::insert($array_new_quotes);        
-        return $result; 
+            $f = function($value)
+            {
+                return (array)$value;
+            };
+            $array_new_quotes = array_map($f, $new_quotes);
+            $qty_new_quotes = count($array_new_quotes);        
+            session(['total_new_quotes' => count($array_new_quotes)]);
+            $result = self::insert($array_new_quotes);
+        }
+        else
+        {
+            session(['total_new_quotes' => 0]);
+        }
+
+        return $result;
 
     }
 }

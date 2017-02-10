@@ -18,6 +18,7 @@ Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
 
 Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	
+	Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
 	# Rutas por get #
 	Route::get('new_enterprise',['as' => 'admin.new_enterprise', 'uses' => 'EnterpriseController@newEnterprise']);
 	Route::get('edit_enterprise', ['as' => 'admin.edit_enterprise', 'uses' => 'EnterpriseController@editEnterprise']);	
@@ -26,8 +27,16 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::get('edit_client', ['as' => 'admin.edit_new_client', 'uses' => 'ClientController@editClient']);
 	Route::get('new_credit', ['as' => 'admin.new_credit', 'uses' => 'PlanQuoteController@newCredit']);
 	Route::get('massive_upload_credits', ['as' => 'admin.massive_upload_credits', 'uses' => 'MassiveCreditLoaderController@newLoad']);	
+
+	Route::get('authorize_commit_credits', ['as' => 'admin.authorize_commit_credits', 'uses' => 'MassiveCreditLoaderController@presetCommitOrRollBack']);
+	
+	Route::get('rollback_upload', ['as' => 'admin.rollback_upload', 'uses' => 'MassiveCreditLoaderController@rollBackUpload']);
+	Route::get('commit_upload', ['as' => 'admin.commit_upload', 'uses' => 'MassiveCreditLoaderController@commitUpload']);
+
+	
 	Route::get('massive_upload_result', ['as' => 'admin.massive_upload_result', 'uses' => 'MassiveCreditLoaderController@resultsLoad']);
 
+	Route::get('uploads_history_report',['as' => 'admin.uploads_history_report', 'uses' => 'MassiveCreditLoaderController@historyReport' ]);
 
 	# Rutas por post #
 	Route::post('create_enterprise', ['as' => 'admin.create_enterprise', 'uses' => 'EnterpriseController@createEnterprise']);
@@ -36,6 +45,12 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('update_client', ['as' => 'admin.update_client', 'uses' => 'ClientController@update_client']);
 	Route::post('create_credit', ['as' => 'admin.create_credit', 'uses' => 'PlanQuoteController@createCredit']);
 	Route::post('upload_credits', ['as' => 'admin.upload_credits', 'uses' => 'MassiveCreditLoaderController@uploadFile']);
+	
+
+
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', ['as' => 'admin.get_client_by_rut', 'uses' => 'ClientController@getClientByRut']);
+
+	# Para consultar los históricos de carga 
+	Route::post('get_uploads_history',['as' => 'admin.get_uploads_history', 'uses' => 'MassiveCreditLoaderController@getUploadsHistory' ]);
 });

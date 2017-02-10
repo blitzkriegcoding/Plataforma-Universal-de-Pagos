@@ -20,6 +20,7 @@ class LogsCargasCrediticias extends Migration
             $table->increments('id_carga');
             $table->dateTime('fecha_hora_carga');
             $table->string('hash_validacion',255);
+            $table->integer('nro_registros')->unsigned()->nullable();
             $table->bigInteger('id_empresa');
             $table->integer('user_id')->unsigned();
 

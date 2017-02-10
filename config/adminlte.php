@@ -181,9 +181,9 @@ return [
                             'url'  => 'admin/massive_upload_credits',
                         ],
                         [
-                            'text'    => "Histórico de cargas\nmasivas",
+                            'text'    => "Histórico de cargas",
                             'icon'    => 'chevron-right',
-                            'url'     => '#',
+                            'url'     => 'admin/uploads_history_report',
                         ],
                     ],
                 ],                
@@ -205,57 +205,60 @@ return [
                     ],
                 ],  
                                
-                [
-                    'text'    => 'Morosidad',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text'    => 'Planes de crédito',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
+                // [
+                //     'text'    => 'Morosidad',
+                //     'url'     => '#',
+                //     'submenu' => [
+                //         [
+                //             'text' => 'Level Two',
+                //             'url'  => '#',
+                //         ],
+                //         [
+                //             'text'    => 'Level Two',
+                //             'url'     => '#',
+                //             'submenu' => [
+                //                 [
+                //                     'text' => 'Level Three',
+                //                     'url'  => '#',
+                //                 ],
+                //                 [
+                //                     'text' => 'Level Three',
+                //                     'url'  => '#',
+                //                 ],
+                //             ],
+                //         ],
+                //     ],
+                // ],
+
+                // [
+                //     'text'    => 'Planes de crédito',
+                //     'url'     => '#',
+                //     'submenu' => [
+                //         [
+                //             'text' => 'Level Two',
+                //             'url'  => '#',
+                //         ],
+                //         [
+                //             'text'    => 'Level Two',
+                //             'url'     => '#',
+                //             'submenu' => [
+                //                 [
+                //                     'text' => 'Level Three',
+                //                     'url'  => '#',
+                //                 ],
+                //                 [
+                //                     'text' => 'Level Three',
+                //                     'url'  => '#',
+                //                 ],
+                //             ],
+                //         ],
+                //     ],
+                // ],
+
                 [
                     'text'    => 'Bases de Cálculo',
                     'url'     => '#',
+                    'icon'    => 'chevron-right',
                     'submenu' => [
                         [
                             'text' => 'Level Two',
@@ -282,6 +285,7 @@ return [
         [
             'text'    => 'Mantenedor de usuarios',
             'icon'    => 'user',
+
             'submenu' => [
                 [
                     'text' => 'Nuevo usuario',
@@ -306,39 +310,27 @@ return [
             'text'    => 'Mantenedor de Canales',
             'icon'    => 'edit',
             'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
+                            [
+                                'text' => 'Gestionar canales',
+                                'url'  => '#',
+                                'icon'    => 'chevron-right',  
+                            ],
+                            [
+                                'text'    => 'Nuevo canal',
+                                'url'     => '#',
+                                'icon'    => 'chevron-right',  
+                            ],
+                            [
+                                'text'    => 'Asociar canales',
+                                'url'     => '#',
+                                'icon'    => 'chevron-right',  
+                            ],
+                            [
+                                'text'    => 'Informe de canales',
+                                'url'     => '#',
+                                'icon'    => 'chevron-right',  
                             ],
                         ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
         ],         
         'PERFIL DEL USUARIO',
         [
