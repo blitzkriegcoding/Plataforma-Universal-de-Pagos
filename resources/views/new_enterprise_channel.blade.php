@@ -50,9 +50,7 @@
 					{!! Form::submit('Guardar datos', ['class' => 'btn btn-primary']) !!}
 				</div>
 			</div>
-
 			{!! csrf_field() !!}
-
     	{!! Form::close() !!}
 		</div>
 	</div>		    

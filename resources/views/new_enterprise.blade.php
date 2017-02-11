@@ -82,10 +82,10 @@
 				<div class="col-sm-3">
 				{!! Form::file('ruta_imagen_empresa', ['id' => 'ruta_imagen_empresa']); !!}		      
 				</div>
-				{!!Form::label('id_empresa', 'Empresa a asociar: ',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('id_canal', 'Canal a asociar:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::select('id_empresa',[] ,NULL, ['id' => 'id_empresa', 'class' => 'form-control', 'placeholder' => '', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}
-				</div>				
+				{!! Form::select('id_canal',[] ,NULL, ['id' => 'id_canal', 'class' => 'form-control', 'placeholder' => '', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}
+				</div>			
 				<div class="col-sm-1">
 					<br>
 				</div>						
