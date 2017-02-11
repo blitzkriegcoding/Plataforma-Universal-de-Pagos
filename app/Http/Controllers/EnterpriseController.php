@@ -122,7 +122,7 @@ class EnterpriseController extends Controller
             $dir_image = base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_empresa;
             $logo = $request->file('ruta_imagen_empresa');
             $logo->move($dir_image, $logo->getClientOriginalName());            
-            $new_enterprise->ruta_img_empresa = $dir_image."/".$ruta_img_empresa->getClientOriginalName();
+            $new_enterprise->ruta_img_empresa = $dir_image."/".$logo->getClientOriginalName();
         }
 
         dd($new_enterprise);
