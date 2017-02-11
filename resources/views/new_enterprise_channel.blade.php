@@ -25,7 +25,7 @@
 @include('flashes.user_message')
 <div class="container">
 	<div class="row">		
-    {!! Form::open(['route' => 'admin.new_enterprise_channel', 'method'=> 'post', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['route' => 'admin.create_enterprise_channel', 'method'=> 'post', 'class' => 'form-horizontal']) !!}
 			<div class="form-group">		    
 				{!!Form::label('id_empresa', 'Empresa a asociar: ',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">

@@ -145,7 +145,11 @@
     @if(Route::currentRouteName() == 'admin.new_enterprise_channel')
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
         <script src="{{ asset('js/select2_empresa.js') }}"></script>
-    @endif    
+    @endif
+    @if(Route::currentRouteName() == 'admin.new_enterprise')
+        <script src="{{ asset('js/custom_scripts.js') }}"></script>
+        <script src="{{ asset('js/select2_empresa.js') }}"></script>
+    @endif     
 @stop
 
 

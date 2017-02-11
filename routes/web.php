@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_credit', ['as' => 'admin.create_credit', 'uses' => 'PlanQuoteController@createCredit']);
 	Route::post('upload_credits', ['as' => 'admin.upload_credits', 'uses' => 'MassiveCreditLoaderController@uploadFile']);
 	Route::post('create_channel', ['as' => 'admin.create_channel', 'uses' => 'ChannelController@createChannel']);
+	Route::post('create_enterprise_channel', ['as' => 'admin.create_enterprise_channel', 'uses' => 'EnterpriseChannelController@createAssociation']);
 
 
 	# Para consultar cliente por rut para el select2

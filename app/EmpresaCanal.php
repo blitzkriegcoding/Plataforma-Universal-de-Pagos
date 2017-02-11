@@ -19,4 +19,9 @@ class EmpresaCanal extends Model
     	return $this->hasOne('Canal', 'id_canal', 'id_canal');
     }
 
+    public function Empresa()
+    {
+        return $this->hasOne('empresas', 'id_empresa', 'id_empresa');
+    }
+
 }
