@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 
 use App\Cliente;
 use App\ClienteEmpresa;
@@ -55,9 +56,17 @@ class ClientController extends Controller
         return Cliente::getFilteredClients($request);
     }
 
-    public function updateClient(Request $request)
+    public function updateClient(UpdateClientRequest $request)
     {
         #dd(file_get_contents("php://input"), $request->id);
-        Cliente::updateClient($request);
+        try
+        {
+            Cliente::updateClient($request);
+            // return json_encode(['mensaje' => 'Cliente editado con éxito']);
+        }
+        catch(Exception $e)
+        {
+            $e;
+        }
     }
 }

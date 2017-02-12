@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom_styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jsgrid.min.css') }}" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/jsgrid-theme.min.css')}}" />    
+    <link rel="stylesheet" href="{{ asset('css/jsgrid-theme.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css')}}" />
+
        
     
     @if(config('adminlte.plugins.datatables'))
@@ -49,6 +51,7 @@
 <script src="{{ asset('js/jquery.inputmask.bundle.js') }}"></script>
 <script src="{{ asset('js/jsgrid.min.js') }}"></script>
 <script src="{{ asset('js/i18n/jsgrid-es.js') }}"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script>
 
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->

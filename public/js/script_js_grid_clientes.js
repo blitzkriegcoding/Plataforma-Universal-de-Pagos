@@ -6,6 +6,24 @@ $(function() {
     }).done(function(clients) {        
         clients.unshift({ old_rut: "0", name: "" });
 
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }        
+
         $("#jsGrid").jsGrid({
             height: "400px",
             width: "100%",
@@ -39,7 +57,16 @@ $(function() {
                     return $.ajax({
                         type: "POST",
                         url: "/admin/update_client/",
-                        data: item
+                        data: item,
+                        statusCode: {
+                            422: function(data){
+                                //alert("Hola");
+                                //console.log(data.responseJSON);
+                                $.each(data.responseJSON, function(i,k){                                    
+                                    toastr.error(k);
+                                });
+                            }
+                        }
                     });
                 },
                 deleteItem: function(item) {
