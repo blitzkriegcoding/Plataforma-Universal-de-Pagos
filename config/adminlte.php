@@ -155,7 +155,7 @@ return [
                 [
                     'text'    => 'Visualizar Clientes',
                     'icon'    => 'chevron-right',
-                    'url'     => 'admin/edit_enterprise',
+                    'url'     => 'admin/report_clients',
                     /*'permission'     => 'edit-enterprise',*/
                 ],                
 
@@ -196,6 +196,18 @@ return [
                             'text' => 'Nueva tasa',
                             'icon'    => 'chevron-right',
                             'url'  => '#',
+                            'submenu' => [
+                                [
+                                    'text'  => 'Diaria',
+                                    'url'   => 'admin/new_daily_interest',
+                                    'icon'  => 'chevron-right',
+                                ],
+                                [
+                                    'text'  => 'Mensual',
+                                    'url'   => 'admin/new_monthly_interest',
+                                    'icon'  => 'chevron-right',
+                                ], 
+                            ]                           
                         ],
                         [
                             'text'    => 'Listado de tasas',
@@ -326,7 +338,7 @@ return [
                                 'icon'    => 'chevron-right',  
                             ],
                             [
-                                'text'    => 'Informe de canales',
+                                'text'    => 'Visualizar canales',
                                 'url'     => '#',
                                 'icon'    => 'chevron-right',  
                             ],
@@ -429,6 +441,6 @@ return [
     */
 
     'plugins' => [
-        'datatables' => true,
+        'datatables' => false,
     ],
 ];

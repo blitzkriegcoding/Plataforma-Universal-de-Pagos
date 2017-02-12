@@ -150,30 +150,14 @@
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
         <script src="{{ asset('js/select2_empresa.js') }}"></script>
     @endif     
+    @if(Route::currentRouteName() == 'admin.new_client')
+        <script src="{{ asset('js/custom_scripts.js') }}"></script>
+        <script src="{{ asset('js/select2_empresa.js') }}"></script>
+    @endif     
 @stop
-
-
-@section('datatables')
-    @if(Route::currentRouteName() == 'admin.uploads_history_report')
-        <script>
-        $(function() {
-            $('#users-table').DataTable({
-                processing: false,
-                serverSide: false,
-                ajax: {
-                    url: '/admin/get_uploads_history',
-                    type:'post'                    
-                },
-                columns: [
-                    { data: 'id_carga', name: 'N° Carga' },
-                    { data: 'fecha_hora_carga', name: 'Fecha y Hora' },                    
-                    { data: 'nro_registros', name: 'Cantidad de Registros' },                    
-                    { data: 'nombre_empresa', name: 'Nombre de la empresa' },                    
-                    { data: 'name', name: 'Nombre del usuario' },                    
-                ]
-            });
-            
-        });
-        </script>    
+@section('jsGrid')
+    @if(Route::currentRouteName() == 'admin.report_clients')
+        
+        <script src="{{ asset('js/script_js_grid_clientes.js') }}"></script>
     @endif
 @stop

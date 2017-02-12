@@ -43,5 +43,40 @@ class Cliente extends Model
         $result = self::insert($array_new_clientes);
         session(['qty_new_clients' => $qty_new_clients]);        
         return $result;
-    }    
+    }
+
+    public static function getAllClients()
+    {
+        $all_clients = \DB::table('clientes as t1')
+                    ->select(\DB::raw("t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente"))
+                    ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+                    ->where('t2.id_empresa','=', 1)
+                    ->orderBy('t1.nombre_cliente', 'asc')
+                    ->orderBy('t1.apellido_cliente', 'asc')
+                    ->get()->toArray();
+        return $all_clients;
+    }
+    public static function getFilteredClients($data)
+    {
+
+        $filtered_clients = \DB::table('clientes as t1')
+                    ->select(\DB::raw("t1.rut_cliente as old_rut, t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente"))
+                    ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+                    ->where('t2.id_empresa','=', 1)
+                    ->where('t1.nombre_cliente', 'like', strtoupper($data->nombre_cliente == ''? '%%':$data->nombre_cliente.'%'))
+                    ->where('t1.apellido_cliente', 'like', strtoupper($data->apellido_cliente == ''? '%%':$data->apellido_cliente.'%'))
+                    ->where('t1.rut_cliente', 'like', strtoupper($data->rut_cliente == ""? '%%':$data->rut_cliente.'%'))
+                    ->where('t1.telefono_cliente', 'like', strtoupper($data->telefono_cliente == ""? '%%':$data->telefono_cliente.'%'))
+                    ->where('t1.direccion_cliente', 'like', strtoupper($data->direccion_cliente == ""? '%%':$data->direccion_cliente.'%'))
+                    ->where('t1.email_cliente', 'like', strtoupper($data->email_cliente == ""? '%%':$data->email_cliente.'%'))                                        
+                    ->orderBy('t1.nombre_cliente', 'asc')
+                    ->orderBy('t1.apellido_cliente', 'asc')
+                    ->get()->toArray();
+        return $filtered_clients;       
+    }
+
+    public static function updateClient($new_data)
+    {
+        
+    }
 }

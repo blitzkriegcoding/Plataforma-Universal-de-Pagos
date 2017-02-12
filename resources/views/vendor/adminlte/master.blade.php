@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.standalone.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom_styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jsgrid.min.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/jsgrid-theme.min.css')}}" />    
        
     
     @if(config('adminlte.plugins.datatables'))
@@ -44,7 +46,10 @@
 <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 <script src="{{ asset('js/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/i18n/es.js') }}"></script>
-<script src="{{ asset('js/jquery.inputmask.bundle.js') }}"></script>    
+<script src="{{ asset('js/jquery.inputmask.bundle.js') }}"></script>
+<script src="{{ asset('js/jsgrid.min.js') }}"></script>
+<script src="{{ asset('js/i18n/jsgrid-es.js') }}"></script>
+
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -52,6 +57,6 @@
 
 @yield('adminlte_js')
 @yield('select2')
-@yield('datatables')
+@yield('jsGrid')
 </body>
 </html>

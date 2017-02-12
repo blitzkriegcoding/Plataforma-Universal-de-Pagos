@@ -58,9 +58,9 @@
 				<div class="col-sm-3">
 				{!! Form::text('email_cliente', '', ['id' => 'email_cliente', 'class' => 'form-control', 'placeholder' =>'email_cliente@mail.com']); !!}		      
 				</div>
-				{!!Form::label('direccion_cliente', 'Empresa / Cliente:',['class' => 'col-sm-2 control-label'])!!}
+				{!!Form::label('id_empresa', 'Empresa a asociar: ',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::select('empresa_cliente', ['1' => 'AFA-CHILE', '2' => 'CHILE-AFA'], null, ['placeholder' => 'Seleccione empresa']); !!}
+				{!! Form::select('id_empresa',[] ,NULL, ['id' => 'id_empresa', 'class' => 'form-control', 'placeholder' => '', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}
 				</div>
 				<div class="col-sm-1">
 					<br>

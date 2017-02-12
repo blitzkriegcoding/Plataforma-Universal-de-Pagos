@@ -23,13 +23,9 @@ class EnterpriseController extends Controller
 
     public function createEnterprise(EnterpriseRequest $request)
     {
-    	#dd($request);
-        # dd(base_path('resources/uploads/keys/private.key'));
-        # base_path('resources/uploads/keys/');
-        $new_enterprise = new Empresa();
-        
+        $new_enterprise = new Empresa();        
         $new_enterprise->nombre_empresa = $request->nombre_empresa;
-        $new_enterprise->nombre_fantasia = $request->nombre_fantasia || NULL;
+        $new_enterprise->nombre_fantasia = $request->nombre_fantasia == ('' || NULL)?NULL:$request->nombre_fantasia;
         $new_enterprise->rut_empresa = str_replace('.','',strtolower(trim($request->rut_empresa)));
         $new_enterprise->email_empresa = trim($request->email_empresa);
         $new_enterprise->url_autorizada_1 = trim($request->ruta_h2h);
@@ -45,12 +41,12 @@ class EnterpriseController extends Controller
         $nombre_empresa = $new_enterprise->rut_empresa;
 
         #dd($request->rut_empresa);
-        if(FALSE == is_dir(base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_empresa))
+        if(FALSE == is_dir(base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_canal))
         {
             try
             {
-                mkdir(base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_empresa, 755);
-                $dir_key = base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_empresa;
+                mkdir(base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_canal, 755);
+                $dir_key = base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_canal;
                 $llave_publica = $request->file('archivo_llave_publica');
                 $llave_privada = $request->file('archivo_llave_privada');
 
@@ -59,7 +55,6 @@ class EnterpriseController extends Controller
 
                 $new_enterprise->ruta_clave_publica = $dir_key."/".$llave_publica->getClientOriginalName();
                 $new_enterprise->ruta_clave_privada = $dir_key."/".$llave_privada->getClientOriginalName();
-
             }
             catch(Exception $e)
             {
@@ -69,7 +64,7 @@ class EnterpriseController extends Controller
         }
         else
         {
-            $dir_key = base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_empresa;
+            $dir_key = base_path('resources/uploads/keys/').$nombre_empresa.'_'.$request->id_canal;
             $llave_publica = $request->file('archivo_llave_publica');
             $llave_privada = $request->file('archivo_llave_privada');
 
@@ -78,16 +73,13 @@ class EnterpriseController extends Controller
 
             $new_enterprise->ruta_clave_publica = $dir_key."/".$llave_publica->getClientOriginalName();
             $new_enterprise->ruta_clave_privada = $dir_key."/".$llave_privada->getClientOriginalName();
-
-            
-
         }
-        if(FALSE == is_dir(base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_empresa))
+        if(FALSE == is_dir(base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_canal))
         {
             try
             {
-                mkdir(base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_empresa, 755);
-                $dir_log = base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_empresa;
+                mkdir(base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_canal, 755);
+                $dir_log = base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_canal;
                 $new_enterprise->ruta_log = $dir_log;
             }
             catch(Exception $e)
@@ -98,18 +90,26 @@ class EnterpriseController extends Controller
         }
         else
         {
-            $dir_log = base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_empresa;
+            $dir_log = base_path('resources/uploads/logs/').$nombre_empresa.'_'.$request->id_canal;
             $new_enterprise->ruta_log = $dir_log;            
         }
-        if(FALSE == is_dir(base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_empresa))
+        if(FALSE == is_dir(base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_canal))
         {
             try
             {
-                mkdir(base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_empresa, 755);
-                $dir_image = base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_empresa;
-                $logo = $request->file('ruta_imagen_empresa');
-                $logo->move($dir_image, $logo->getClientOriginalName());
-                $new_enterprise->ruta_img_empresa = $dir_image."/".$logo->getClientOriginalName();
+                mkdir(base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_canal, 755);
+                $dir_image = base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_canal;
+                if($request->file('ruta_imagen_empresa') != NULL || !empty($request->file('ruta_imagen_empresa')))
+                {
+                    $logo = $request->file('ruta_imagen_empresa');
+                    $logo->move($dir_image, $logo->getClientOriginalName());
+                    $new_enterprise->ruta_img_empresa = $dir_image."/".$logo->getClientOriginalName();                    
+                }
+                else
+                {
+                    $new_enterprise->ruta_img_empresa = $dir_image."/generic_logo.jpg";
+                }
+
             }
             catch(Exception $e)
             {
@@ -119,13 +119,28 @@ class EnterpriseController extends Controller
         }
         else
         {
-            $dir_image = base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_empresa;
-            $logo = $request->file('ruta_imagen_empresa');
-            $logo->move($dir_image, $logo->getClientOriginalName());            
-            $new_enterprise->ruta_img_empresa = $dir_image."/".$logo->getClientOriginalName();
+            $dir_image = base_path('resources/uploads/images/').$nombre_empresa.'_'.$request->id_canal;
+            if($request->file('ruta_imagen_empresa') != NULL || !empty($request->file('ruta_imagen_empresa')))
+            {
+                $logo = $request->file('ruta_imagen_empresa');
+                $logo->move($dir_image, $logo->getClientOriginalName());
+                $new_enterprise->ruta_img_empresa = $dir_image."/".$logo->getClientOriginalName();                    
+            }
+            else
+            {
+                $new_enterprise->ruta_img_empresa = $dir_image."/generic_logo.jpg";
+            }
         }
-
-        dd($new_enterprise);
+        try{
+            $new_enterprise->save();
+            EmpresaCanal::firstOrCreate(['id_empresa' => $new_enterprise->id_empresa, 'id_canal' => $request->id_canal]);
+            flash('Empresa creada y asociada a canal comercial con éxito', 'success');
+            return redirect()->route('admin.new_enterprise');
+        }
+        catch(Exception $e)
+        {
+            throw $e;
+        }
     }
 
     public function getEnterpriseByName(Request $request)

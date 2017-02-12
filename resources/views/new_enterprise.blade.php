@@ -19,8 +19,8 @@
 		</div>
 	@endif    
 @stop
-
 @section('content')
+@include('flashes.user_message')
 <div class="container">
 	<div class="row">		
     {!! Form::open(['route' => 'admin.create_enterprise', 'method'=> 'post', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
@@ -85,7 +85,7 @@
 				{!!Form::label('id_canal', 'Canal a asociar:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
 				{!! Form::select('id_canal',[] ,NULL, ['id' => 'id_canal', 'class' => 'form-control', 'placeholder' => '', 'style' => 'border-radius: 10px; line-height: 1.5']); !!}
-				</div>			
+				</div>		
 				<div class="col-sm-1">
 					<br>
 				</div>						
