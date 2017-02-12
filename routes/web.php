@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_enterprise', 			['as' => 'admin.create_enterprise', 		'uses'	=> 'EnterpriseController@createEnterprise']);
 	Route::post('update_enterprise', 			['as' => 'admin.update_enterprise', 		'uses'	=> 'EnterpriseController@updateEnterprise']);
 	Route::post('create_client', 				['as' => 'admin.create_client', 			'uses'	=> 'ClientController@createClient']);
-	Route::post('update_client', 				['as' => 'admin.update_client', 			'uses'	=> 'ClientController@update_client']);
+	Route::post('update_client', 				['as' => 'admin.update_client', 			'uses'	=> 'ClientController@updateClient']);
 	Route::post('create_credit', 				['as' => 'admin.create_credit', 			'uses'	=> 'PlanQuoteController@createCredit']);
 	Route::post('upload_credits', 				['as' => 'admin.upload_credits', 			'uses'	=> 'MassiveCreditLoaderController@uploadFile']);
 	Route::post('create_channel', 				['as' => 'admin.create_channel', 			'uses' 	=> 'ChannelController@createChannel']);

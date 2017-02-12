@@ -55,8 +55,9 @@ class ClientController extends Controller
         return Cliente::getFilteredClients($request);
     }
 
-    public function update_client(Request $request)
+    public function updateClient(Request $request)
     {
         #dd(file_get_contents("php://input"), $request->id);
+        Cliente::updateClient($request);
     }
 }

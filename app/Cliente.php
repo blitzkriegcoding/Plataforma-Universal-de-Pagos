@@ -77,6 +77,14 @@ class Cliente extends Model
 
     public static function updateClient($new_data)
     {
-        
+        \DB::table('clientes')
+            ->where('rut_cliente', $new_data->old_rut)
+            ->update([
+                'rut_cliente' => $new_data->rut_cliente,
+                'nombre_cliente' => $new_data->nombre_cliente, 
+                'apellido_cliente' => $new_data->apellido_cliente,
+                'email_cliente' => $new_data->email_cliente,
+                'telefono_cliente' => $new_data->telefono_cliente,
+                'direccion_cliente' => $new_data->direccion_cliente]);
     }
 }
