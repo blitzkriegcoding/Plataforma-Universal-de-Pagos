@@ -15,7 +15,14 @@ class QuoteController extends Controller
 
     public function getClientQuotes(Request $request)
     {
-    	dd(Cuota::getClientQuotes($request->rut_cliente));
+    	# dd($request->id_cliente_cuota);
+    	return Cuota::getClientQuotes($request->id_cliente_cuota);
+    }
+
+    public function getFilteredQuotes(Request $request)
+    {
+    	// dd($request->id_cliente_cuota);
+    	return Cuota::getFilteredQuotes($request);
     }
 
 

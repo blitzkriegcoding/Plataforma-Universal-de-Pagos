@@ -40,6 +40,9 @@ class ClientController extends Controller
     	return Cliente::getClientByRut($request->rut_cliente)->toJson();
     }
 
+
+
+
     public function reportClients()
     {
         return view('report_clients');

@@ -22,7 +22,7 @@ class Cliente extends Model
     	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get();
     	return $clientes;
     }
-    
+   
     public static function addNewClients($id_carga)
     {
         

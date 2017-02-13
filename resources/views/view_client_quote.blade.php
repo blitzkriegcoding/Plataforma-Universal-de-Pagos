@@ -33,11 +33,11 @@
 				</div>
 				{!! Form::button('Ver cuotas', ['class' => 'btn btn-primary', 'onclick' => 'getQuotes()']) !!}
 			</div>
-
+			<div class="row">				
+				<br>
+			</div>
 			<div class="row">
-				<div class="col-sm-1">
-					<br>
-				</div>					
+				<div class="col-sm-11" id="jsGridQuotes"></div>
 			</div>
 			{!! csrf_field() !!}
 

@@ -24,7 +24,7 @@ $(document).ready(function(){
 		      		'id': item.id_cliente_cuota,
 		      		'text': item.datos_cliente
 		      	});
-		      	console.log(item);
+		      	//console.log(item);
 		      });
 
 		      return {

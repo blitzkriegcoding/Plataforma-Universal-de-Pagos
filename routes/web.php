@@ -72,6 +72,8 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('get_filtered_loaded_lote', 	['as' => 'admin.get_filtered_loaded_lote', 	'uses' => 'MassiveCreditLoaderController@getFilteredLoadedLote']);
 	# Para visualizar las cuotas
 	Route::post('get_client_quotes', 			['as' => 'admin.get_client_quotes', 		'uses' => 'QuoteController@getClientQuotes']);
+	# Para filtrar las cuotas
+	Route::post('get_filtered_quotes', 			['as' => 'admin.get_filtered_quotes', 		'uses' => 'QuoteController@getFilteredQuotes']);
 
 
 });
