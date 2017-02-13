@@ -6,7 +6,9 @@
     @stack('css')
     @yield('css')
 @stop
-
+@section('spinner')
+    <link rel="stylesheet" href="{{ asset('css/spinner.css') }} ">
+@stop
 @section('body_class', 'skin-' . config('adminlte.skin', 'blue') . ' sidebar-mini ' . (config('adminlte.layout') ? [
     'boxed' => 'layout-boxed',
     'fixed' => 'fixed',
@@ -142,6 +144,11 @@
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
         <script src="{{ asset('js/select2_rut.js') }}"></script>
     @endif
+    @if(Route::currentRouteName() == 'admin.view_client_quotes')
+        <script src="{{ asset('js/custom_scripts.js') }}"></script>
+        <script src="{{ asset('js/select2_rut.js') }}"></script>
+        <script src="{{ asset('js/script_js_grid_cuotas.js') }}"></script>        
+    @endif    
     @if(Route::currentRouteName() == 'admin.new_enterprise_channel')
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
         <script src="{{ asset('js/select2_empresa.js') }}"></script>
@@ -157,7 +164,15 @@
 @stop
 @section('jsGrid')
     @if(Route::currentRouteName() == 'admin.report_clients')
-        
-        <script src="{{ asset('js/script_js_grid_clientes.js') }}"></script>
+        <script src="{{ asset('js/script_js_grid_clientes.js') }}"></script>        
+    @endif
+    @if(Route::currentRouteName() == 'admin.authorize_commit_credits')
+        <script src="{{ asset('js/script_js_grid_lotes.js') }}"></script>
+    @endif
+
+@stop
+@section('formUpload')
+    @if(Route::currentRouteName() == 'admin.massive_upload_credits')
+        <script src="{{ asset('js/send_to_server.js') }}"></script>
     @endif
 @stop

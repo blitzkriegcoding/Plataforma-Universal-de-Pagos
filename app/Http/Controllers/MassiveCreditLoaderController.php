@@ -25,7 +25,14 @@ class MassiveCreditLoaderController extends Controller
 
     public function uploadFile(UploadFileRequest $request)
     {
-    	# dd($request->lote_credito);
+    	//dd($request->lote_credito);
+        # return;
+        @session()->forget('id_carga');
+        @session()->forget('nro_registros');
+        @session()->forget('qty_new_clients');
+        @session()->forget('total_credit_plans');
+        @session()->forget('total_new_quotes');
+        @session()->forget('fecha_hora_carga');        
     	$bulk = [];
         $bulk_result = [];
     	$path_file = $request->file('lote_credito')->getRealPath();
@@ -51,33 +58,36 @@ class MassiveCreditLoaderController extends Controller
     		}
     		if(!empty($this->bulk))
     		{
-                \DB::beginTransaction();
-                try{
+                try
+                {
                     $log_id_carga = LogCargaCrediticia::createNewLog($this->bulk);    
                 }
                 catch(Exception $e)
                 {
-                    \DB::rollBack();
-                    print_r($e);
-
                     throw($e);
                 }
                 LoteCredito::createNewLote($this->bulk, $log_id_carga);
                 session(['id_carga' => $log_id_carga]);
-                \DB::commit();
-               
-                return redirect()->route('admin.authorize_commit_credits');
+                # \DB::commit();
+                return json_encode(['ruta_redireccion' => route('admin.authorize_commit_credits'), 
+                                    'success' => true, 'mensaje' => 'Archivo cargado con éxito']);
+                // return redirect()->route('admin.authorize_commit_credits');
+
     		}
             else
             {
-                flash('Lote vacío o memoria insuficiente', 'error');
-                return back();
+                // flash('Lote vacío o memoria insuficiente', 'error');
+                // return back();
+                return json_encode(['ruta_redireccion' => route('admin.authorize_commit_credits'), 
+                                    'success' => false, 'mensaje' => 'Lote vacío o memoria insuficiente']);
             }
     	}
         else
         {
-            flash('Lote vacío o con valores inválidos', 'error');
-            return back();
+            // flash('Lote vacío o con valores inválidos', 'error');
+            // return back();
+            return json_encode(['ruta_redireccion' => route('admin.authorize_commit_credits'), 
+                            'success' => false, 'mensaje' => 'Lote vacío o con valores inválidos']);
         }
 
 
@@ -85,6 +95,11 @@ class MassiveCreditLoaderController extends Controller
 
     public function resultsLoad()
     {   
+        if(empty(session('nro_registros')) || NULL == session('nro_registros'))
+        {
+            flash('Debe efectuar una carga de archivos antes de pasar a ver los resultados', 'warning');
+            return redirect()->route('admin.massive_upload_credits');
+        }
         return view('result_massive_upload');    
         // dd(session('qty_new_clients'));
         // if(!is_null(session('qty_new_clients')) && !is_null(session('total_credit_plans'))  && !is_null(session('total_new_quotes')))
@@ -131,6 +146,18 @@ class MassiveCreditLoaderController extends Controller
         return json_encode(['data' => LogCargaCrediticia::getHistory()]);
     }
 
+    public function getCurrentLoadedLote()
+    {
+        return LoteCredito::getCurrentLoadedLote();
+    }
 
-
+    public function getFilteredLoadedLote(Request $req)
+    {
+        return LoteCredito::getFilteredLoadedLote($req);
+    }
+    
+    public function deleteItemFromLoadedLote($item)
+    {
+        return LoteCredito::deleteItemFromLoadedLote($item);
+    }
 }

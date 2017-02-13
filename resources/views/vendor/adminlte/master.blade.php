@@ -29,8 +29,8 @@
         <!-- DataTables -->
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     @endif
-
     @yield('adminlte_css')
+    @yield('spinner')
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -61,5 +61,6 @@
 @yield('adminlte_js')
 @yield('select2')
 @yield('jsGrid')
+@yield('formUpload')
 </body>
 </html>

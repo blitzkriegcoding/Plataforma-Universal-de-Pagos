@@ -35,7 +35,10 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::get('new_enterprise_channel', 		['as' => 'admin.new_enterprise_channel', 	'uses' 	=> 'EnterpriseChannelController@newAssociation']);
 	Route::get('new_daily_interest',			['as' => 'admin.new_daily_interest',		'uses'	=> 'InterestController@newDailyInterest']);
 	Route::get('new_monthly_interest',			['as' => 'admin.new_monthly_interest',		'uses'	=> 'InterestController@newMonthlyInterest']);
-	Route::get('report_clients', 				['as' => 'admin.report_clients', 			'uses' => 'ClientController@reportClients']);
+	Route::get('report_clients', 				['as' => 'admin.report_clients', 			'uses' 	=> 'ClientController@reportClients']);
+	Route::get('del_item_from_loaded_lote', 	['as' => 'admin.del_item_from_loaded_lote', 'uses' 	=> 'ClientController@deleteItemFromLoadedLote']);
+	Route::get('view_client_quotes', 			['as' => 'admin.view_client_quotes', 		'uses' 	=> 'ClientController@viewClientQuotes']);
+
 
 	# Rutas por post #
 	Route::post('create_enterprise', 			['as' => 'admin.create_enterprise', 		'uses'	=> 'EnterpriseController@createEnterprise']);
@@ -48,6 +51,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_enterprise_channel', 	['as' => 'admin.create_enterprise_channel', 'uses' 	=> 'EnterpriseChannelController@createAssociation']);
 	Route::post('create_daily_interest', 		['as' => 'admin.create_daily_interest', 	'uses' 	=> 'InterestController@createDailyInterest']);
 	Route::post('create_monthly_interest', 		['as' => 'admin.create_monthly_interest', 	'uses' 	=> 'InterestController@createMonthlyInterest']);
+	Route::post('update_client_quotes', 		['as' => 'admin.update_client_quotes', 		'uses' 	=> 'QuoteController@updateClientQuotes']);
 	
 
 	# Para consultar cliente por rut para el select2
@@ -62,4 +66,12 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('get_all_clients', 				['as' => 'admin.get_all_clients', 			'uses' => 'ClientController@getAllClients']);
 	# Para filtrar los clientes de la empresa
 	Route::post('get_filtered_clients', 		['as' => 'admin.get_filtered_clients', 		'uses' => 'ClientController@getFilteredClients']);
+	# Para ver la carga actual del lote y modificarla
+	Route::post('get_current_loaded_lote', 		['as' => 'admin.get_current_loaded_lote', 	'uses' => 'MassiveCreditLoaderController@getCurrentLoadedLote']);
+	# Para filtrar los registros del archivo
+	Route::post('get_filtered_loaded_lote', 	['as' => 'admin.get_filtered_loaded_lote', 	'uses' => 'MassiveCreditLoaderController@getFilteredLoadedLote']);
+	# Para visualizar las cuotas
+	Route::post('get_client_quotes', 			['as' => 'admin.get_client_quotes', 		'uses' => 'QuoteController@getClientQuotes']);
+
+
 });

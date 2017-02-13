@@ -38,7 +38,6 @@ class ClientController extends Controller
     public function getClientByRut(Request $request)
     {
     	return Cliente::getClientByRut($request->rut_cliente)->toJson();
-    	
     }
 
     public function reportClients()
@@ -55,18 +54,22 @@ class ClientController extends Controller
     {
         return Cliente::getFilteredClients($request);
     }
-
+    
     public function updateClient(UpdateClientRequest $request)
     {
-        #dd(file_get_contents("php://input"), $request->id);
         try
         {
             Cliente::updateClient($request);
-            // return json_encode(['mensaje' => 'Cliente editado con éxito']);
         }
         catch(Exception $e)
         {
             $e;
         }
     }
+
+    public function viewClientQuotes()
+    {
+        return view('view_client_quote');
+    }
+
 }

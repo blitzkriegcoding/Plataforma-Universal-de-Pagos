@@ -2,45 +2,28 @@ $(function() {
     jsGrid.locale("es");
     $.ajax({
         type: "POST",
-        url: "/admin/get_all_clients"
-    }).done(function(clients) {
-        clients.unshift({ old_rut: "0", name: "" });
-        toastr.options = {
-          "closeButton": true,
-          "debug": false,
-          "newestOnTop": false,
-          "progressBar": false,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": false,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "7000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
+        url: "/admin/get_current_loaded_lote"
+    }).done(function(records) {
+        records.unshift({ id_lote: "0", name: "" });
 
-        $("#jsGrid").jsGrid({
-            height: "400px",
+        $("#jsGridEditLote").jsGrid({
+            height: "450px",
             width: "100%",
             filtering: true,
-            inserting: false,
-            deleting: false,
+            inserting: true,
+            deleting: true,
             editing: true,
             sorting: true,
             paging: true,
             autoload: true,
-            pageSize: 10,
+            pageSize: 48,
             pageButtonCount: 5,
             deleteConfirm: "Do you really want to delete client?",
             controller: {
                 loadData: function(filter) {
                     return $.ajax({
                         type: "POST",
-                        url: "/admin/get_filtered_clients",
+                        url: "/admin/get_filtered_loaded_lote",
                         data: filter
                     });
                 },
@@ -72,18 +55,25 @@ $(function() {
                 deleteItem: function(item) {
                     return $.ajax({
                         type: "DELETE",
-                        url: "/clients/",
+                        url: "/admin/delete_item_loaded_lote/",
                         data: item
                     });
                 }
             },
             fields: [
-                { name: "nombre_cliente", title: "Nombres", type: "text", width: 150 },                
-                { name: "apellido_cliente", title: "Apellidos", type: "text", width: 150 },                
-                { name: "rut_cliente", title: "RUT", type: "text", width: 150 },
-                { name: "email_cliente", title: "Email", type: "text", width: 150 },
-                { name: "telefono_cliente", title: "Teléfono", type: "text", width: 150 },
-                { name: "direccion_cliente", title: "Dirección", type: "text", width: 150 },
+                { name: "nro_cuota", title: "N° Cuota", type: "text", width: 60 },                
+                { name: "fecha_vencimiento", title: "Vencimiento", type: "text", width: 100 },                
+                { name: "interes", title: "Monto interés", type: "text", width: 100 },
+                { name: "amortizacion", title: "Amotización", type: "text", width: 100 },
+                { name: "valor_cuota", title: "Monto cuota", type: "text", width: 75 },
+                { name: "saldo_insoluto", title: "Saldo insoluto", type: "text", width: 100 },
+                { name: "estado_cuota", title: "Estado de cuota", type: "text", width: 100 },
+                { name: "tipo_cuota", title: "Tipo de Cuota", type: "text", width: 100 },
+                /*{ name: "fecha_pago", title: "Fecha pago efectivo", type: "text", width: 150 },*/
+                { name: "rut_cliente", title: "RUT del Cliente", type: "text", width: 100 },
+                { name: "nro_credito", title: "N° Crédito", type: "text", width: 80 },
+                { name: "nombres_cliente", title: "Nombres", type: "text", width: 100 },
+                { name: "apellidos_cliente", title: "Apellidos", type: "text", width: 100 },
                 //{ name: "country_id", title: "Country", type: "select", width: 100, items: countries, valueField: "id", textField: "name" },
                 //{ name: "married", type: "checkbox", title: "Is Married", sorting: false, filtering: false },
                 { type: "control" }

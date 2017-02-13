@@ -79,6 +79,35 @@ class Cuota extends Model
         }
 
         return $result;
-
     }
+
+    public static function getClientQuotes($rut_cliente)
+    {
+        $quotes = \DB::table('cuotas as t1')
+                ->select(\DB::raw('t1.id_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+                    t1.status_cuota, t1.fecha_vencimiento, t1.fecha_pago_efectivo'))
+                ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
+                ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+                ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
+                ->where('rut_cliente', 'like',$rut_cliente.'%')
+                ->orderBy('t1.nro_cuota')
+                ->get()->toArray();
+
+        return $quotes;
+    }
+
+    public static function getClientQuotes($rut_cliente)
+    {
+        $quotes = \DB::table('cuotas as t1')
+                ->select(\DB::raw('t1.id_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+                    t1.status_cuota, t1.fecha_vencimiento, t1.fecha_pago_efectivo'))
+                ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
+                ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+                ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
+                ->where('rut_cliente', 'like',$rut_cliente.'%')
+                ->orderBy('t1.nro_cuota')
+                ->get()->toArray();
+
+        return $quotes;
+    }    
 }
