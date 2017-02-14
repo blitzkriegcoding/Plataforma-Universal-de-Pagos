@@ -14,13 +14,11 @@ class UsuariosEmpresas extends Migration
     public function up()
     {
         Schema::create('usuarios_empresas', function (Blueprint $table) {
-             $table->engine = 'InnoDB';
-             $table->charset = 'utf8';
-            //
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
             $table->increments('id_usuario_empresa');
             $table->bigInteger('id_empresa');
             $table->integer('user_id')->unsigned();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_empresa')->references('id_empresa')->on('empresas')->onDelete('cascade')->onUpdate('cascade');
 

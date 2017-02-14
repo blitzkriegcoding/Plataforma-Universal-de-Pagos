@@ -14,6 +14,9 @@ class EmpresaUsuario extends Migration
     public function up()
     {
         Schema::create('empresa_usuario', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+                        
             $table->increments('id');
             $table->bigInteger('id_empresa');
             $table->integer('user_id')->unsigned();
