@@ -36,8 +36,8 @@
 			<div class="row">				
 				<br>
 			</div>
-			<div class="row">
-				<div class="col-sm-11" id="jsGridQuotes"></div>
+			<div class="row col-sm-11">
+				<div id="jsGridQuotes"></div>
 			</div>
 			{!! csrf_field() !!}
 

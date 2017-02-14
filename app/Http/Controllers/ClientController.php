@@ -15,7 +15,6 @@ class ClientController extends Controller
     //
     public function newClient()
     {
-    	#dd(\Auth::user());        
     	return view('new_client');
     }
 
@@ -37,11 +36,13 @@ class ClientController extends Controller
 
     public function getClientByRut(Request $request)
     {
-    	return Cliente::getClientByRut($request->rut_cliente)->toJson();
+    	return Cliente::getClientByRut($request->rut_cliente);
     }
 
-
-
+    public function getQuotePlanClientByRut(Request $request)
+    {
+        return Cliente::getQuotePlanClientByRut($request->rut_cliente);
+    }
 
     public function reportClients()
     {

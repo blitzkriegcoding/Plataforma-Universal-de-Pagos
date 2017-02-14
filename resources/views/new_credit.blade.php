@@ -103,7 +103,7 @@
 						{!! Form::button('Generar borrador', ['class' => 'btn btn-warning']) !!}
 					</div>	
 					<div class="col-sm-offset-1 col-sm-1">
-						{!! Form::submit('Generar crédito', ['class' => 'btn btn-primary']) !!}
+						{!! Form::button('Generar crédito', ['class' => 'btn btn-primary']) !!}
 					</div>						
 				</div>			
 			</div>

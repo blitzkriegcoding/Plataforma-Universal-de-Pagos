@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\PlanCuota;
 use App\InteresCuota;
+use Carbon\Carbon;
 class Cuota extends Model
 {
     protected $table = 'cuotas';
-    protected $fillable = ['nro_cuota', 'valor_cuota', 'activa', 'status_cuota', 'fecha_nacimiento', 'fecha_pago_efectivo', 'id_plan_cuota', 'en_proceso', 'bill_number'];
+    protected $fillable = ['nro_cuota', 'valor_cuota', 'activa', 'status_cuota', 'fecha_vencimiento', 'fecha_pago_efectivo', 'id_plan_cuota', 'en_proceso', 'bill_number'];
     protected $primaryKey = 'id_cuota';
     public $timestamps = false;
     public function PlanCuota()
@@ -23,27 +24,6 @@ class Cuota extends Model
     public static function addQuotes($id_carga)
     {
         $result = NULL;
-
-        // $new_quotes = \DB::table('lotes_creditos as t1')
-        //                 ->select(\DB::raw("t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, 
-        //                     t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, 
-        //                     NULL as bill_number"))
-        //                 ->join('plan_cuotas as t2','t1.nro_credito', '=', 't2.nro_credito')
-        //                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
-        //                 ->where('id_carga', '=', $id_carga)
-        //                 ->orderBy('t2.nro_credito','asc')
-        //                 ->orderBy('t1.nro_cuota', 'asc')
-        //                 ->get()->toArray();
-        /*
-        select distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, 
-        NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number
-        from lotes_creditos t1 
-        inner join plan_cuotas t2 on (t1.nro_credito = t2.nro_credito)
-        inner join clientes_empresas t3 on (t2.id_cliente_cuota = t3.id_cliente_cuota)
-        left join cuotas t4 on (t2.id_plan_cuota = t4.id_plan_cuota)
-        where t4.nro_cuota is null
-        order by  t2.id_plan_cuota, t1.nro_cuota asc;
-        */
 
         $new_quotes = \DB::table('lotes_creditos as t1')
                         ->select(\DB::raw("distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number"))
@@ -72,16 +52,19 @@ class Cuota extends Model
         return $result;
     }
 
-    public static function getClientQuotes($id_cliente_cuota)
+    public static function getClientQuotes($data)
     {
         $quotes = \DB::table('cuotas as t1')
-                ->select(\DB::raw('t1.id_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
-                    t1.status_cuota, t1.fecha_vencimiento, t1.fecha_pago_efectivo'))
+                ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+                    t1.status_cuota, 
+                    date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
+                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo'))
                 ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
-                ->where('t2.id_cliente_cuota', '=',$id_cliente_cuota)
-                ->where('t3.id_empresa', '=', 1)
+                ->leftJoin('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
+                ->where('t2.id_plan_cuota', '=',$data->id_plan_cuota)
+                ->where('t3.id_empresa', '=', 1)                
                 ->orderBy('t1.nro_cuota')
                 ->get()->toArray();
         return $quotes;
@@ -90,13 +73,16 @@ class Cuota extends Model
     public static function getFilteredQuotes($data)
     {
         $quotes = \DB::table('cuotas as t1')
-                ->select(\DB::raw('t1.id_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
-                    t1.status_cuota, t1.fecha_vencimiento, t1.fecha_pago_efectivo'))
+                ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+                    t1.status_cuota, 
+                    date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
+                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo'))
                 ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
+                ->leftJoin('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
                 ->where('t3.id_empresa', '=', 1)
-                ->where('t2.id_cliente_cuota', (int)$data->id_cliente_cuota)
+                ->where('t2.id_plan_cuota', (int)$data->id_plan_cuota)
                 ->where('t3.rut_cliente', 'like', '%'.strtoupper($data->rut_cliente).'%')
                 ->where('t1.nro_cuota', 'like', '%'.strtoupper($data->nro_cuota).'%')
                 ->where('t1.activa', 'like', '%'.strtoupper($data->activa).'%')
@@ -104,5 +90,39 @@ class Cuota extends Model
                 ->where('t1.fecha_vencimiento', 'like', '%'.strtoupper($data->fecha_vencimiento).'%')                
                 ->get()->toArray();
         return $quotes;
-    }    
+    }
+
+    public static function getQuotePlanByRut($rut_cliente = NULL)
+    {
+        $clientes = DB::table('clientes as t1')
+        ->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ',upper(apellido_cliente), ' - CREDITO N°: ', t3.nro_credito) as datos_cliente, t3.id_plan_cuota"))
+        ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+        ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+        ->where('t2.rut_cliente', 'like', strtoupper(trim("$rut_cliente%")))
+        ->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->get();
+        return $clientes;      
+    }
+
+    public static function updateQuote($data)
+    {
+        \DB::table('cuotas')
+            ->where('id_cuota', $data->id_cuota)
+            ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
+                'activa' => strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
+                'fecha_vencimiento' => date('Y-m-d', strtotime($data->fecha_vencimiento))]);
+    }
+
+    public static function deleteQuote($data)
+    {
+        \DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
+    }
+
+    public static function createQuote($data)
+    {
+        self::create(['nro_cuota' => $data->nro_cuota, 
+                'valor_cuota' => $data->valor_cuota, 'activa' => $data->activa, 'status_cuota' => $data->status_cuota, 
+                'fecha_vencimiento' => (date('Y-m-d', strtotime($data->fecha_vencimiento))), 'id_plan_cuota' => $data->id_plan_cuota]);
+    }
 }

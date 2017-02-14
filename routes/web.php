@@ -52,10 +52,16 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_daily_interest', 		['as' => 'admin.create_daily_interest', 	'uses' 	=> 'InterestController@createDailyInterest']);
 	Route::post('create_monthly_interest', 		['as' => 'admin.create_monthly_interest', 	'uses' 	=> 'InterestController@createMonthlyInterest']);
 	Route::post('update_client_quotes', 		['as' => 'admin.update_client_quotes', 		'uses' 	=> 'QuoteController@updateClientQuotes']);
+	Route::post('update_client_quotes', 		['as' => 'admin.update_client_quotes', 		'uses' 	=> 'QuoteController@updateClientQuotes']);
+	Route::post('update_quote', 				['as' => 'admin.update_quote', 				'uses' => 'QuoteController@updateQuote']);
+	Route::post('delete_quote', 				['as' => 'admin.delete_quote', 				'uses' => 'QuoteController@deleteQuote']);
+	Route::post('create_quote', 				['as' => 'admin.create_quote', 				'uses' => 'QuoteController@createQuote']);
 	
 
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', 			['as' => 'admin.get_client_by_rut', 		'uses' => 'ClientController@getClientByRut']);
+	# Para consultar cliente por rut para el select2
+	Route::post('get_client_plan_cuota',		['as' => 'admin.get_client_plan_cuota', 	'uses' => 'ClientController@getQuotePlanClientByRut']);
 	# Para consultar empresa por nombre para el select2
 	Route::post('get_enterprise_by_name', 		['as' => 'admin.get_enterprise_by_name', 	'uses' => 'EnterpriseController@getEnterpriseByName']);
 	# Para consultar canales por numero para el select2
@@ -74,6 +80,5 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('get_client_quotes', 			['as' => 'admin.get_client_quotes', 		'uses' => 'QuoteController@getClientQuotes']);
 	# Para filtrar las cuotas
 	Route::post('get_filtered_quotes', 			['as' => 'admin.get_filtered_quotes', 		'uses' => 'QuoteController@getFilteredQuotes']);
-
 
 });

@@ -19,8 +19,23 @@ class Cliente extends Model
     	->join('clientes_empresas', 'clientes.rut_cliente', '=', 'clientes_empresas.rut_cliente')
     	->where('clientes_empresas.rut_cliente', 'like', trim("$rut_cliente%"))
     	->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
-    	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get();
+    	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get()->toJson();
     	return $clientes;
+    }
+
+    public static function getQuotePlanClientByRut($rut_cliente = NULL)
+    {
+        $clientes = DB::table('clientes as t1')
+        ->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ', upper(apellido_cliente), ' - CREDITO N°: ', t3.nro_credito) as datos_cliente, t3.id_plan_cuota"))
+        ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+        ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+        ->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
+        ->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->get()
+        ->toJson();
+
+        return $clientes;      
     }
    
     public static function addNewClients($id_carga)
