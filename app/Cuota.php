@@ -19,14 +19,6 @@ class Cuota extends Model
     {
     	return $this->hasOne('InteresCuota', 'id_cuota', 'id_cuota');
     }
-    // public function InteresDiario()
-    // {
-    // 	return $this->hasOne('InteresDiario','','');
-    // }
-    // public function InteresMensual()
-    // {
-    // 	return $this->hasOne('InteresMensual');
-    // }
 
     public static function addQuotes($id_carga)
     {
@@ -62,7 +54,6 @@ class Cuota extends Model
                         ->orderBy('t2.id_plan_cuota', 'asc')
                         ->orderBy('t1.nro_cuota', 'asc')
                         ->get()->toArray();
-
         if(count($new_quotes) > 0)
         {
             $f = function($value)
@@ -78,7 +69,6 @@ class Cuota extends Model
         {
             session(['total_new_quotes' => 0]);
         }
-
         return $result;
     }
 
@@ -94,7 +84,6 @@ class Cuota extends Model
                 ->where('t3.id_empresa', '=', 1)
                 ->orderBy('t1.nro_cuota')
                 ->get()->toArray();
-
         return $quotes;
     }
 
