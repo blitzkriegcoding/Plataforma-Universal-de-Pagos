@@ -13,7 +13,7 @@ class EmpresaUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('empresa_usuario', function (Blueprint $table) {
+        Schema::create('empresas_usuarios', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
                         
