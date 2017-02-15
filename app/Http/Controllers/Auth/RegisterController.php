@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\EmpresaUsuario;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -36,8 +37,10 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        # $this->middleware('admin');
     }
+
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -45,15 +48,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name'      => 'required|max:255',
-            'email'     => 'required|email|max:255|unique:users',
-            'password'  => 'required|min:6|confirmed',
-            'active'    => 'required|in:0,1'
-        ]);
-    }
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'rut_cliente'   => 'required|exists:users,rut_cliente',
+    //         'name'          => 'required|max:255',
+    //         'email'         => 'required|email|max:255|unique:users',
+    //         'password'      => 'required|min:6|confirmed',
+    //         'active'        => 'required|in:0,1'
+    //     ]);
+    // }
 
     /**
      * Create a new user instance after a valid registration.
@@ -62,12 +66,15 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => bcrypt($data['password']),
-            'active'    => 0        
+    {   
+        $new_user = User::create([
+            'rut_cliente'   => $data['rut_cliente'],
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'password'      => bcrypt($data['password']),
+            'active'        => 0        
         ]);
+        EmpresaUsuario::create(['id_empresa' => $data['id_empresa'], 'user_id' => $new_user->id]);
+        return $new_user;
     }
 }

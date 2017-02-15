@@ -317,9 +317,14 @@ return [
             'submenu' => [
                 [
                     'text' => 'Nuevo usuario',
-                    'url'  => '#',
+                    'url'  => 'admin/new_user',
                     'icon'    => 'chevron-right',
                 ],   
+                [
+                    'text' => 'Permisos',
+                    'url'  => '#',
+                    'icon'    => 'chevron-right',
+                ],                                
                 [
                     'text' => 'Listado de usuarios',
                     'url'  => '#',
@@ -330,11 +335,6 @@ return [
                     'url'  => '#',
                     'icon'    => 'chevron-right',
                 ], 
-                [
-                    'text' => 'Misceláneos',
-                    'url'  => '#',
-                    'icon'    => 'chevron-right',
-                ],                                
             ],
         ],
        

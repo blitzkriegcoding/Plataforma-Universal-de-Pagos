@@ -66,8 +66,7 @@
 					<br>
 				</div>						
 		  	</div>
-			<div class="form-group">	    
-
+			<div class="form-group">
 				{!!Form::label('direccion_cliente', 'Dirección del cliente:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
 				{!! Form::textarea('direccion_cliente','' ,['id' => 'direccion_cliente', 'rows' => 4, 'cols'=>35, 'placeholder' => 'Miraflores 321, Edf Marsella, Piso 1, Local 1-A "Los Pellines"' ]); !!}
@@ -81,9 +80,7 @@
 					{!! Form::submit('Guardar datos', ['class' => 'btn btn-primary']) !!}
 				</div>
 			</div>
-
 			{!! csrf_field() !!}
-
     	{!! Form::close() !!}
 		</div>
 	</div>		    

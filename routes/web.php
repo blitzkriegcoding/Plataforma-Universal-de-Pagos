@@ -20,6 +20,8 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	
 	# Rutas por get #
 	Route::get('/', 							['as' => 'index', 							'uses' 	=> 'HomeController@index']);
+	Route::get('new_user',						['as' => 'admin.new_user', 					'uses' 	=> 'HomeController@newUser']);
+
 	Route::get('new_enterprise',				['as' => 'admin.new_enterprise', 			'uses' 	=> 'EnterpriseController@newEnterprise']);
 	Route::get('edit_enterprise', 				['as' => 'admin.edit_enterprise', 			'uses' 	=> 'EnterpriseController@editEnterprise']);
 	Route::get('new_client', 					['as' => 'admin.new_client', 				'uses' 	=> 'ClientController@newClient']);
@@ -53,10 +55,10 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['role:admin']], function(){
 	Route::post('create_monthly_interest', 		['as' => 'admin.create_monthly_interest', 	'uses' 	=> 'InterestController@createMonthlyInterest']);
 	Route::post('update_client_quotes', 		['as' => 'admin.update_client_quotes', 		'uses' 	=> 'QuoteController@updateClientQuotes']);
 	Route::post('update_client_quotes', 		['as' => 'admin.update_client_quotes', 		'uses' 	=> 'QuoteController@updateClientQuotes']);
-	Route::post('update_quote', 				['as' => 'admin.update_quote', 				'uses' => 'QuoteController@updateQuote']);
-	Route::post('delete_quote', 				['as' => 'admin.delete_quote', 				'uses' => 'QuoteController@deleteQuote']);
-	Route::post('create_quote', 				['as' => 'admin.create_quote', 				'uses' => 'QuoteController@createQuote']);
-	
+	Route::post('update_quote', 				['as' => 'admin.update_quote', 				'uses' 	=> 'QuoteController@updateQuote']);
+	Route::post('delete_quote', 				['as' => 'admin.delete_quote', 				'uses' 	=> 'QuoteController@deleteQuote']);
+	Route::post('create_quote', 				['as' => 'admin.create_quote', 				'uses' 	=> 'QuoteController@createQuote']);
+	Route::post('create_user', 					['as' => 'admin.create_user',				'uses' 	=>	'Auth\RegisterController@register']);
 
 	# Para consultar cliente por rut para el select2
 	Route::post('get_client_by_rut', 			['as' => 'admin.get_client_by_rut', 		'uses' => 'ClientController@getClientByRut']);
