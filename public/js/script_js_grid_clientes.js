@@ -4,6 +4,7 @@ $(function() {
         type: "POST",
         url: "/admin/get_all_clients"
     }).done(function(clients) {
+
         clients.unshift({ old_rut: "0", name: "" });
         toastr.options = {
           "closeButton": true,
@@ -48,7 +49,7 @@ $(function() {
                     console.log(item);
                     return $.ajax({
                         type: "POST",
-                        url: "/clients/",
+                        url: "/admin/create_client/",
                         data: item
                     });
                 },
@@ -71,19 +72,19 @@ $(function() {
                 },
                 deleteItem: function(item) {
                     return $.ajax({
-                        type: "DELETE",
+                        type: "POST",
                         url: "/clients/",
                         data: item
                     });
                 }
             },
             fields: [
-                { name: "nombre_cliente", title: "Nombres", type: "text", width: 150 },                
-                { name: "apellido_cliente", title: "Apellidos", type: "text", width: 150 },                
-                { name: "rut_cliente", title: "RUT", type: "text", width: 150 },
-                { name: "email_cliente", title: "Email", type: "text", width: 150 },
-                { name: "telefono_cliente", title: "Teléfono", type: "text", width: 150 },
-                { name: "direccion_cliente", title: "Dirección", type: "text", width: 150 },
+                { name: "rut_cliente", title: "RUT", type: "text", width: 85, align:"center" },
+                { name: "nombre_cliente", title: "Nombres", type: "text", width: 150, align:"center" },                
+                { name: "apellido_cliente", title: "Apellidos", type: "text", width: 150, align:"center" },
+                { name: "email_cliente", title: "Email", type: "text", width: 150, align:"center" },
+                { name: "telefono_cliente", title: "Teléfono", type: "text", width: 100, align:"center" },
+                { name: "direccion_cliente", title: "Dirección", type: "text", width: 150, align:"center" },
                 //{ name: "country_id", title: "Country", type: "select", width: 100, items: countries, valueField: "id", textField: "name" },
                 //{ name: "married", type: "checkbox", title: "Is Married", sorting: false, filtering: false },
                 { type: "control" }

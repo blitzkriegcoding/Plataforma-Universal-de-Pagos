@@ -29,11 +29,11 @@
 			<div class="form-group">		    
 				{!!Form::label('rut_usuario', 'RUT del usuario: ',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('rut_usuario', '', ['id' => 'rut_usuario', 'class' => 'form-control', 'placeholder' => '12345678-9']); !!}		      
+				{!! Form::text('rut_usuario', '', ['id' => 'rut_usuario', 'class' => 'form-control', 'placeholder' => '12345678-9', 'style' =>'text-transform: uppercase;']); !!}		      
 				</div>
 				{!!Form::label('name', 'Nombres del Usuario:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('name', '', ['id' => 'name', 'class' => 'form-control','placeholder' => 'Juanita']); !!}		      
+				{!! Form::text('name', '', ['id' => 'name', 'class' => 'form-control','placeholder' => 'Juanita', 'style' =>'text-transform: uppercase;']); !!}		      
 				</div>
 				<div class="col-sm-1">
 					<br>
@@ -42,12 +42,12 @@
 			<div class="form-group">		    
 				{!!Form::label('password', 'Password:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('password', '', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Pérez']); !!}		      
+				{!! Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => '*****']); !!}		      
 				</div>
 
 				{!!Form::label('password_confirmation', 'Confirme password:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::text('password_confirmation', '', ['id' => 'password_confirmation', 'class' => 'form-control', 'placeholder' =>'+56(2)23456789']); !!}		      
+				{!! Form::password('password_confirmation', ['id' => 'password_confirmation', 'class' => 'form-control', 'placeholder' =>'******']); !!}		      
 				</div>
 				<div class="col-sm-1">
 					<br>

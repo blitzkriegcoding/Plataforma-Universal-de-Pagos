@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Empresa;
 class HomeController extends Controller
 {
     /**
@@ -24,9 +24,6 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+        //dd(\Auth::user()->empresa_usuario() );
     }
-    public function newUser()
-    {
-        return view('new_user');
-    }    
 }

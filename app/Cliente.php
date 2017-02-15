@@ -63,7 +63,7 @@ class Cliente extends Model
     public static function getAllClients()
     {
         $all_clients = \DB::table('clientes as t1')
-                    ->select(\DB::raw("t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente"))
+                    ->select(\DB::raw("t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente, t1.direccion_cliente"))
                     ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
                     ->where('t2.id_empresa','=', 1)
                     ->orderBy('t1.nombre_cliente', 'asc')
@@ -75,7 +75,7 @@ class Cliente extends Model
     {
 
         $filtered_clients = \DB::table('clientes as t1')
-                    ->select(\DB::raw("t1.rut_cliente as old_rut, t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente"))
+                    ->select(\DB::raw("t1.rut_cliente as old_rut, t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente, t1.direccion_cliente"))
                     ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
                     ->where('t2.id_empresa','=', 1)
                     ->where('t1.nombre_cliente', 'like', strtoupper($data->nombre_cliente == ''? '%%':$data->nombre_cliente.'%'))
@@ -92,6 +92,7 @@ class Cliente extends Model
 
     public static function updateClient($new_data)
     {
+        #dd($new_data->direccion_cliente);
         \DB::table('clientes')
             ->where('rut_cliente', $new_data->old_rut)
             ->update([

@@ -19,11 +19,14 @@ class Empresa extends Model
     	return $this->hasMany('EmpresaCanal', 'id_empresa', 'id_empresa');
     }
 
+
     public static function getEnterpriseByName($name)
     {
+        $empresa = \Auth::user()->EmpresaUsuario == null? '%%' : \Auth::user()->EmpresaUsuario->id_empresa;
     	return \DB::table('empresas')
     				->select(\DB::raw('id_empresa, upper(nombre_empresa) as nombre_empresa'))
     				->where('nombre_empresa', 'like', strtoupper(trim("$name%")))
+                    ->where('id_empresa', 'like', $empresa)
     				->orderBy('nombre_empresa', 'asc')
     				->get()->toJson();
     }

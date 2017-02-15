@@ -130,13 +130,13 @@ return [
                     'text' => 'Nueva Empresa',
                     'icon'    => 'chevron-right',
                     'url'  => 'admin/new_enterprise',
-                    'permission'  => 'create-enterprise',
+                    /*'permission'  => 'create-enterprise',*/
                 ],
                 [
                     'text'    => 'Visualizar Empresas',
                     'icon'    => 'chevron-right',
-                    'url'     => 'admin/edit_enterprise',
-                    'permission'     => 'edit-enterprise',
+                    'url'     => '#',
+                    /*'permission'     => 'edit-enterprise',*/
                 ],
 
             ],

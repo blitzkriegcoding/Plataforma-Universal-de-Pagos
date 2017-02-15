@@ -15,6 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public $primaryKey = 'id';
     protected $fillable = ['rut_usuario','name', 'email', 'password', 'active'];
 
     /**
@@ -26,6 +27,30 @@ class User extends Authenticatable
 
     public function EmpresaUsuario()
     {
-        return $this->hasMany('EmpresaUsuario', 'id', 'user_id');
+        return $this->hasOne(EmpresaUsuario::class, 'user_id',  'id');
+    }
+
+    public static function createNewUser($data)
+    {
+        try
+        {
+
+            $new_user = self::create([
+                'rut_usuario'   => $data->rut_usuario,
+                'name'          => $data->name,
+                'email'         => $data->email,
+                'password'      => bcrypt($data->password),
+                'active'        => $data->active
+            ]);
+            $new_user['id_empresa'] = $data->id_empresa;
+            EmpresaUsuario::associateEnterpriseUser($new_user);            
+        }
+        catch(Exception $e)
+        {
+            abort(500, 'No fue posible agregar al usuario');
+            throw $e;
+        }
+
+        return $new_user;        
     }
 }
