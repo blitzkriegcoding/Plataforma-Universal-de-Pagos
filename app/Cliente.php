@@ -12,12 +12,19 @@ class Cliente extends Model
     protected $primaryKey = 'rut_cliente';
     public $timestamps = false;
 
+    private static function getIdEmpresa()
+    {
+        $empresa = \Auth::user()->EmpresaUsuario == null? '%%' : \Auth::user()->EmpresaUsuario->id_empresa;
+        return $empresa;
+    }
+
     public static function getClientByRut($rut_cliente = NULL)
     {   	
-    	$clientes = DB::table('clientes')
-    	->select(DB::raw("concat(clientes_empresas.rut_cliente,' - ',upper(nombre_cliente), ' ',upper(apellido_cliente)) as datos_cliente, clientes_empresas.id_cliente_cuota"))
-    	->join('clientes_empresas', 'clientes.rut_cliente', '=', 'clientes_empresas.rut_cliente')
-    	->where('clientes_empresas.rut_cliente', 'like', trim("$rut_cliente%"))
+    	$clientes = DB::table('clientes as t1')
+    	->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ',upper(apellido_cliente)) as datos_cliente, t2.id_cliente_cuota"))
+    	->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
+        ->where('t2.id_empresa', 'like', self::getIdEmpresa() )
+    	->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
     	->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
     	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get()->toJson();
     	return $clientes;
@@ -25,16 +32,18 @@ class Cliente extends Model
 
     public static function getQuotePlanClientByRut($rut_cliente = NULL)
     {
+        // \Auth::user()->EmpresaUsuario->id_empresa
         $clientes = DB::table('clientes as t1')
         ->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ', upper(apellido_cliente), ' - CREDITO N°: ', t3.nro_credito) as datos_cliente, t3.id_plan_cuota"))
         ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
         ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
         ->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
+        ->where('t2.id_empresa', 'like', self::getIdEmpresa())
         ->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
         ->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
         ->get()
         ->toJson();
-
+        
         return $clientes;      
     }
    
@@ -65,7 +74,7 @@ class Cliente extends Model
         $all_clients = \DB::table('clientes as t1')
                     ->select(\DB::raw("t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente, t1.direccion_cliente"))
                     ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
-                    ->where('t2.id_empresa','=', 1)
+                    ->where('t2.id_empresa','like', self::getIdEmpresa())
                     ->orderBy('t1.nombre_cliente', 'asc')
                     ->orderBy('t1.apellido_cliente', 'asc')
                     ->get()->toArray();
@@ -77,7 +86,7 @@ class Cliente extends Model
         $filtered_clients = \DB::table('clientes as t1')
                     ->select(\DB::raw("t1.rut_cliente as old_rut, t1.nombre_cliente, t1.apellido_cliente, t1.rut_cliente, t1.email_cliente, t1.telefono_cliente, t1.direccion_cliente"))
                     ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
-                    ->where('t2.id_empresa','=', 1)
+                    ->where('t2.id_empresa','like', self::getIdEmpresa())
                     ->where('t1.nombre_cliente', 'like', strtoupper($data->nombre_cliente == ''? '%%':$data->nombre_cliente.'%'))
                     ->where('t1.apellido_cliente', 'like', strtoupper($data->apellido_cliente == ''? '%%':$data->apellido_cliente.'%'))
                     ->where('t1.rut_cliente', 'like', strtoupper($data->rut_cliente == ""? '%%':$data->rut_cliente.'%'))

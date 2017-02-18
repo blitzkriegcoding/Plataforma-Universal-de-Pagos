@@ -14,6 +14,12 @@ class LogCargaCrediticia extends Model
 
     private $credit_bulk = [];
 
+    private static function getIdEmpresa()
+    {
+        $empresa = \Auth::user()->EmpresaUsuario == null? '%%' : \Auth::user()->EmpresaUsuario->id_empresa;
+        return $empresa;
+    }
+
     public function LoteCredito()
     {
     	return $this->hasMany('LoteCredito','id_carga', 'id_carga');
@@ -37,10 +43,29 @@ class LogCargaCrediticia extends Model
 
     public static function getHistory()
     {
-        return \DB::table('logs_cargas_crediticias')
-                    ->select(\DB::raw("id_carga, DATE_FORMAT(fecha_hora_carga,'%d %b %Y %T:%i') as fecha_hora_carga, hash_validacion,nro_registros,nombre_empresa,name"))
-                    ->join('empresas', 'logs_cargas_crediticias.id_empresa', '=', 'empresas.id_empresa')
-                    ->join('users', 'logs_cargas_crediticias.user_id', '=', 'users.id')
-        ->orderBy('id_carga','desc')->get();
+        return \DB::table('logs_cargas_crediticias as t1')
+                    ->select(\DB::raw("id_carga, DATE_FORMAT(fecha_hora_carga,'%d-%m-%Y %T') as fecha_hora_carga, hash_validacion, 
+                        nro_registros, nombre_empresa, upper(name) as nombre_usuario,cargado"))
+                    ->join('empresas as t2', 't1.id_empresa', '=', 't2.id_empresa')
+                    ->join('users as t3', 't1.user_id', '=', 't3.id')                    
+                    ->where('t1.id_empresa', 'like', self::getIdEmpresa())
+                    ->orderBy('id_carga','desc')->get()->toArray();
     }
+    public static function getFilteredHistory($request)
+    {
+        
+        return \DB::table('logs_cargas_crediticias as t1')
+                    ->select(\DB::raw("id_carga, DATE_FORMAT(fecha_hora_carga,'%d-%m-%Y %T') as fecha_hora_carga, hash_validacion, 
+                        nro_registros, nombre_empresa, upper(name) as nombre_usuario,cargado"))
+                    ->join('empresas as t2', 't1.id_empresa', '=', 't2.id_empresa')
+                    ->join('users as t3', 't1.user_id', '=', 't3.id')
+                    ->where('t1.id_empresa', 'like', self::getIdEmpresa())
+                    ->where('id_carga', 'like', $request->id_carga == NULL?"%%":$request->id_carga."%")
+                    ->where('fecha_hora_carga', 'like', $request->fecha_hora_carga == NULL?"%%":$request->fecha_hora_carga."%")
+                    ->where('nro_registros', 'like', $request->nro_registros == NULL?"%%":$request->nro_registros."%")
+                    ->where('nombre_empresa', 'like', $request->nombre_empresa == NULL?"%%":strtoupper($request->nombre_empresa)."%")
+                    ->where('name', 'like', $request->name == NULL?"%%":strtoupper($request->name)."%")
+                    ->where('cargado','like', $request->cargado == NULL?"%%":strtoupper($request->cargado)."%")
+                    ->orderBy('id_carga','desc')->get()->toArray();
+    }    
 }

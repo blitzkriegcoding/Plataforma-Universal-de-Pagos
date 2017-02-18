@@ -100,14 +100,7 @@ class MassiveCreditLoaderController extends Controller
             flash('Debe efectuar una carga de archivos antes de pasar a ver los resultados', 'warning');
             return redirect()->route('admin.massive_upload_credits');
         }
-        return view('result_massive_upload');    
-        // dd(session('qty_new_clients'));
-        // if(!is_null(session('qty_new_clients')) && !is_null(session('total_credit_plans'))  && !is_null(session('total_new_quotes')))
-        // {
-            
-        // }
-        // flash('No ha cargado correctamente las transacciones','error');
-        // return view('authorize_commit_credits');
+        return view('result_massive_upload');
     }
 
     public function presetCommitOrRollBack()
@@ -128,7 +121,7 @@ class MassiveCreditLoaderController extends Controller
     }
 
     public function commitUpload()
-    {        
+    {
         Cliente::addNewClients(session('id_carga'));
         ClienteEmpresa::associateClientsEnterprise($this->bulk, session('id_carga'));
         PlanCuota::addNewClientQuotePlan(session('id_carga'));
@@ -142,10 +135,14 @@ class MassiveCreditLoaderController extends Controller
     }
 
     public function getUploadsHistory()
-    {
-        return json_encode(['data' => LogCargaCrediticia::getHistory()]);
+    { 
+        return LogCargaCrediticia::getHistory();
     }
-
+    
+    public function getFilteredHistory(Request $request)
+    { 
+        return LogCargaCrediticia::getFilteredHistory($request);
+    }
     public function getCurrentLoadedLote()
     {
         return LoteCredito::getCurrentLoadedLote();

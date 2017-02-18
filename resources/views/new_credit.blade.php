@@ -83,7 +83,7 @@
 				</div>
 				{!!Form::label('base_calculo', 'Base de Cálculo:',['class' => 'col-sm-2 control-label'])!!}
 				<div class="col-sm-3">
-				{!! Form::select('base_calculo', [], null, ['placeholder' => 'Seleccione base', 'class' => 'form-control']); !!}
+				{!! Form::select('base_calculo', ['AM' =>'SISTEMA AMERICANO', 'FR' => 'SISTEMA FRANCÉS', 'AL' => 'SISTEMA ALEMÁN', 'BL' => 'BALÓN'], null, ['placeholder' => 'Seleccione base']); !!}
 				</div>
 				<div class="col-sm-1">
 					<br>

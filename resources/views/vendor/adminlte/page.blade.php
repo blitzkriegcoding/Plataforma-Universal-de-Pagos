@@ -172,6 +172,9 @@
     @if(Route::currentRouteName() == 'admin.authorize_commit_credits')
         <script src="{{ asset('js/script_js_grid_lotes.js') }}"></script>
     @endif
+    @if(Route::currentRouteName() == 'admin.uploads_history_report')
+        <script src="{{ asset('js/script_js_grid_cargas.js') }}"></script>
+    @endif
 
 @stop
 @section('formUpload')

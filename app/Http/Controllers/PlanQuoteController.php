@@ -21,7 +21,7 @@ class PlanQuoteController extends Controller
 
     public function createCredit(CreateCreditRequest $request)    
     {
-    	dd($request);
+    	#dd($request);
     }
 
 

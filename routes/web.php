@@ -73,6 +73,8 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::post('get_channel_by_number', 		['as' => 'admin.get_channel_by_number', 	'uses' => 'ChannelController@getChannelByNumber']);
 		# Para consultar los históricos de carga 
 		Route::post('get_uploads_history',			['as' => 'admin.get_uploads_history', 		'uses' => 'MassiveCreditLoaderController@getUploadsHistory' ]);
+		# Para filtrar los históricos de carga 		
+		Route::post('get_filtered_history',			['as' => 'admin.get_filtered_history', 		'uses' => 'MassiveCreditLoaderController@getFilteredHistory' ]);
 		# Para consultar todos los clientes de la empresa
 		Route::post('get_all_clients', 				['as' => 'admin.get_all_clients', 			'uses' => 'ClientController@getAllClients']);
 		# Para filtrar los clientes de la empresa
