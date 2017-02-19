@@ -15,7 +15,9 @@
         "jeroennoten/laravel-adminlte": "^1.17",
         "laracasts/flash": "^2.0",
         "nesbot/carbon": "^1.22",
-        "barryvdh/laravel-ide-helper": "^2.2"
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "michelecurletta/laravel-schedule-overview": "^1.0",
+        "ixudra/curl": "6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\ValorUf as vf;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        'App\Console\Commands\Financials'
     ];
 
     /**
@@ -26,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('financials')->everyFiveMinutes()->withoutOverlapping()->sendOutputTo('storage/cronlog.txt')->emailOutputTo('yher@gmail.com');
+
+
     }
 
     /**

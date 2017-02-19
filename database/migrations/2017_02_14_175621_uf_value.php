@@ -13,13 +13,12 @@ class UfValue extends Migration
      */
     public function up()
     {
-        Schema::create('valores_uf_dolar', function (Blueprint $table) {
+        Schema::create('valores_uf', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
 
             $table->increments('id_valor');
-            $table->decimal('valor_uf', 11, 2);
-            $table->decimal('valor_dolar', 11, 2);
+            $table->decimal('valor_uf', 11, 2)->nullable();            
             $table->datetime('fecha');
         });
     }
