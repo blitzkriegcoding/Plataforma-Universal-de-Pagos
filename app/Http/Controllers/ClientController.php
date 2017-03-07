@@ -75,5 +75,4 @@ class ClientController extends Controller
     {
         return view('view_client_quote');
     }
-
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Empresa;
 use App\PlanCuota;
 use App\InteresCuota;
 use Carbon\Carbon;
@@ -64,7 +65,7 @@ class Cuota extends Model
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
                 ->leftJoin('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
                 ->where('t2.id_plan_cuota', '=',$data->id_plan_cuota)
-                ->where('t3.id_empresa', '=', 1)                
+                ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())                
                 ->orderBy('t1.nro_cuota')
                 ->get()->toArray();
         return $quotes;
@@ -81,7 +82,7 @@ class Cuota extends Model
                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
                 ->leftJoin('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
-                ->where('t3.id_empresa', '=', 1)
+                ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                 ->where('t2.id_plan_cuota', (int)$data->id_plan_cuota)
                 ->where('t3.rut_cliente', 'like', '%'.strtoupper($data->rut_cliente).'%')
                 ->where('t1.nro_cuota', 'like', '%'.strtoupper($data->nro_cuota).'%')
@@ -125,4 +126,27 @@ class Cuota extends Model
                 'valor_cuota' => $data->valor_cuota, 'activa' => $data->activa, 'status_cuota' => $data->status_cuota, 
                 'fecha_vencimiento' => (date('Y-m-d', strtotime($data->fecha_vencimiento))), 'id_plan_cuota' => $data->id_plan_cuota]);
     }
+
+    public static function getClientsPaymentByDate($dt_start = NULL, $dt_end = NULL)
+    {
+        if((NULL == $dt_start) || (NULL == $dt_end))
+            $date_start = $date_end = date('Y-m-d');
+
+        $payment = \DB::table('cuotas as t1')
+                    ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
+                                        t1.nro_cuota, t1.valor_cuota, date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, t1.bill_number as boleta"))
+                    ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
+                    ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
+                    ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
+                    ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
+                    #->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
+                    ->where('t3.id_empresa', '=', 1)
+                    ->orderBy('cast(bill_number as decimal)', 'asc')
+                    ->get()
+                    ->toArray();
+
+        return $payment;
+    } 
+
+
 }

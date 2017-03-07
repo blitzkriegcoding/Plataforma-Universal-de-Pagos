@@ -8,9 +8,11 @@ class Empresa extends Model
 {
     //
     protected $table = 'empresas';
+    
     protected $fillable = ['nombre_empresa', 'nombre_fantasia', 'rut_empresa', 
     'email_empresa', 'url_autorizada_1', 'url_autorizada_2', 'ruta_clave_publica', 
     'ruta_clave_privada', 'ruta_log', 'ruta_img_empresa'];
+
     public $primaryKey = 'id_empresa';
     public $timestamps = false;
 
@@ -31,5 +33,9 @@ class Empresa extends Model
     				->get()->toJson();
     }
 
-
+    public static function getIdEmpresa()
+    {
+        $empresa = \Auth::user()->EmpresaUsuario->id_empresa;
+        return $empresa;
+    }
 }

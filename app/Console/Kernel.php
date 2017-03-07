@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('financials')->everyFiveMinutes()->withoutOverlapping()->sendOutputTo('storage/cronlog.txt')->emailOutputTo('yher@gmail.com');
+        $schedule->command('financials')->hourly()->withoutOverlapping()->sendOutputTo('storage/cronlog.txt')->emailOutputTo('yher@gmail.com');
 
 
     }

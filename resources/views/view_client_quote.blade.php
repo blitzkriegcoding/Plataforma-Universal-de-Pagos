@@ -37,6 +37,7 @@
 				<br>
 			</div>
 			<div class="row col-sm-11">
+				<div class="row col-sm-1" id="download_button"></div>			
 				<div id="jsGridQuotes"></div>
 			</div>
 			{!! csrf_field() !!}

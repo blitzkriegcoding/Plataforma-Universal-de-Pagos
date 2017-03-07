@@ -144,6 +144,10 @@
         <script src="{{ asset('js/custom_scripts.js') }}"></script>
         <script src="{{ asset('js/select2_rut.js') }}"></script>
     @endif
+    @if(Route::currentRouteName() == 'admin.view_clients_payments')
+        <script src="{{ asset('js/custom_scripts.js') }}"></script>
+        <script src="{{ asset('js/script_js_grid_pagos.js') }}"></script>  
+    @endif    
     @if(Route::currentRouteName() == 'admin.view_client_quotes')
         <script src="{{ asset('js/custom_scripts.js') }}"></script>        
         <script src="{{ asset('js/select2_rut_plan.js') }}"></script>

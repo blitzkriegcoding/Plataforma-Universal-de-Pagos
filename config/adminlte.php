@@ -321,6 +321,11 @@ return [
                             'url'  => 'admin/view_client_quotes',
                             'icon'    => 'chevron-right',
                         ],
+                        [
+                            'text' => 'Consultar pagos',
+                            'url'  => 'admin/view_clients_payments',
+                            'icon'    => 'chevron-right',
+                        ],                        
                     ],
                 ],                
             ],

@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Cuota;
-
 use App\Http\Requests;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Http\Requests\CreateQuoteRequest;
+use App\Http\Requests\CheckDatePaymentRequest;
+use Excel;
 
 class QuoteController extends Controller
 {
@@ -25,14 +25,13 @@ class QuoteController extends Controller
 
     public function getFilteredQuotes(Request $request)
     {
-    	// dd($request->id_cliente_cuota);
+    	
     	return Cuota::getFilteredQuotes($request);
     }
 
     #public function updateQuote(UpdateQuoteRequest $request)
     public function updateQuote(UpdateQuoteRequest $request)
     {
-    	//dd($request->id_cuota);
     	Cuota::updateQuote($request);
     }
 
@@ -43,9 +42,23 @@ class QuoteController extends Controller
 
     public function createQuote(CreateQuoteRequest $request)
     {
-        //dd($request->fecha_vencimiento);
         Cuota::createQuote($request);
     }
 
+    public function viewClientsPayments()
+    {
+       // return Cuota::getClientsPaymentByDate($request->date_start, $request->date_end);
+        return view('report_clients_payments');
+    }
 
+    public function getPayments(CheckDatePaymentRequest $request)
+    {
+        $data = Cuota::getClientsPaymentByDate($request->dt_start, $request->dt_end);
+        return Excel::create('pagos_generados_'.date('Y_m_d'), function($excel) use ($data) {
+            $excel->sheet('pagos_'.date('Y_m_d'), function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->store('xls');        
+    }
 }

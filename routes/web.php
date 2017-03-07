@@ -41,9 +41,9 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::get('report_clients', 				['as' => 'admin.report_clients', 			'uses' 	=> 'ClientController@reportClients']);
 		Route::get('del_item_from_loaded_lote', 	['as' => 'admin.del_item_from_loaded_lote', 'uses' 	=> 'ClientController@deleteItemFromLoadedLote']);
 		Route::get('view_client_quotes', 			['as' => 'admin.view_client_quotes', 		'uses' 	=> 'ClientController@viewClientQuotes']);
+		Route::get('view_clients_payments', 		['as' => 'admin.view_clients_payments', 	'uses'	=> 'QuoteController@viewClientsPayments']);
 		
 		Route::get('check', 						['as' => 'admin.check', 					'uses' 	=> 'TestController@check']);
-
 
 		# Rutas por post #
 		Route::post('create_enterprise', 			['as' => 'admin.create_enterprise', 		'uses'	=> 'EnterpriseController@createEnterprise']);
@@ -87,6 +87,12 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::post('get_client_quotes', 			['as' => 'admin.get_client_quotes', 		'uses' => 'QuoteController@getClientQuotes']);
 		# Para filtrar las cuotas
 		Route::post('get_filtered_quotes', 			['as' => 'admin.get_filtered_quotes', 		'uses' => 'QuoteController@getFilteredQuotes']);
+		# Descargar Excel de crédito del cliente
+		Route::post('get_excel_file', 				['as' => 'admin.get_excel_file', 			'uses' => 'QuoteController@getExcelFile']);
+		# Mostrar pagos del día
+		Route::post('get_payments',					['as' => 'admin.get_payments', 				'uses' => 'QuoteController@getPayments']);
+		# Mostrar pagos del día		
+		Route::post('get_payments_filtered',		['as' => 'admin.get_payments_filtered',		'uses' => 'QuoteController@getFilteredPayments']);
 
 	}
 );

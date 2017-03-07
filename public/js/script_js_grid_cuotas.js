@@ -4,7 +4,17 @@ function getQuotes()
     $.ajax({
         type: "POST",
         url: "/admin/get_client_quotes",
-        data: {'id_plan_cuota': $('#rut_cliente').val() }
+        data: {'id_plan_cuota': $('#rut_cliente').val() },
+        beforeSend: function() 
+            {
+                $("#download_button").empty();
+            },                         
+        statusCode: {
+            200: function()
+            {
+                $("#download_button").append("<input type='button' class='btn btn-success' value='Descargar Excel'onclick='javascript:void(0)'>");
+            }
+        }        
     }).done(function(quotes) {
         quotes.unshift({ id_cuota: "0", id_plan_cuota: "1", name: "Data" });
 
@@ -29,7 +39,8 @@ function getQuotes()
                     return $.ajax({
                         type: "POST",
                         url: "/admin/get_filtered_quotes/",
-                        data: filter
+                        data: filter,
+
                     });
                 },
                 insertItem: function(item) {
@@ -39,10 +50,13 @@ function getQuotes()
                         type: "POST",
                         url: "/admin/create_quote/",
                         data: item,
+                        beforeSend: function() 
+                            {
+                                $("#download_button").empty();
+                            },                        
                         statusCode: {
                             422: function(data)
                             {
-
                                 $.each(data.responseJSON, function(i,k){                                    
                                     toastr.error(k);
                                 });
@@ -123,4 +137,9 @@ function getQuotes()
             ]
         });
     });
+}
+
+function downloadFile()
+{
+
 }
