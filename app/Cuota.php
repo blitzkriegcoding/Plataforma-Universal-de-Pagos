@@ -140,7 +140,7 @@ class Cuota extends Model
                     ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
                     ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
                     #->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
-                    ->where('t3.id_empresa', '=', 1)
+                    ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                     ->orderBy('cast(bill_number as decimal)', 'asc')
                     ->get()
                     ->toArray();

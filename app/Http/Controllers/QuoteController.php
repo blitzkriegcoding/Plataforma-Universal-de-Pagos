@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cuota;
+use App\Empresa;
 use App\Http\Requests;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Http\Requests\CreateQuoteRequest;
@@ -59,6 +60,6 @@ class QuoteController extends Controller
             {
                 $sheet->fromArray($data);
             });
-        })->store('xls');        
+        })->store('xls', storage_path('exports_'.Empresa::getIdEmpresa()))->export();        
     }
 }
