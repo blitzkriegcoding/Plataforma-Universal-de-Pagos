@@ -3,7 +3,7 @@
 @section('title', 'Plataforma Universal de Pagos')
 
 @section('content_header')
-    <h1>Consulta de Pagos de Cuotas</h1>
+    <h1>Descarga de reporte de pagos</h1>
 	@if (count($errors) > 0)
 		<div class="container">
 			<div class="row">
@@ -45,7 +45,7 @@
 					<div class=" col-sm-1 col-sm-offset-2">
 						{!! Form::button('Generar reporte', ['class' => 'btn btn-primary', 'onclick' => 'getPaymentsExcel()']) !!}
 					</div>	
-					<div id="download_button" class="col-sm-1 col-sm-offset-1"></div>
+					<div id="download_button" class="col-sm-3 col-sm-offset-1"></div>
 				</div>			
 			</div>
 

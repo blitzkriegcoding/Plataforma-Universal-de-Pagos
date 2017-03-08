@@ -8,7 +8,7 @@ function getPaymentsExcel()
         beforeSend: function() 
             {
                 $("#download_button").empty();
-                $("#download_button").append("<img src='/images/ellipsis.gif' class='img-responsive' alt='cargando...'>");              
+                $("#download_button").append("<div class='row'><span>Construyendo archivo...</span><img src='/images/squares.gif' class='img-responsive' alt='cargando...'></div>");              
 
 
             },
