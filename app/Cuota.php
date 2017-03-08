@@ -129,8 +129,6 @@ class Cuota extends Model
 
     public static function getClientsPaymentByDate($dt_start = NULL, $dt_end = NULL)
     {
-
-
         if((NULL == $dt_start) || (NULL == $dt_end))
         {            
             $date_start = $date_end = date('Y-m-d');
@@ -140,6 +138,8 @@ class Cuota extends Model
             $date_start = $dt_start;
             $date_end = $dt_end;
         }
+
+
         
         $payment['data'] = \DB::table('cuotas as t1')
                     ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
@@ -148,6 +148,7 @@ class Cuota extends Model
                     ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                     ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
                     ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
+                    ->whereNotNull('t1.bill_number')
                     #->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                     ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                     ->orderBy('bill_number', 'asc')

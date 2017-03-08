@@ -54,8 +54,20 @@ class QuoteController extends Controller
     }
 
     public function getPayments(CheckDatePaymentRequest $request)
-    {       
-        $data = Cuota::getClientsPaymentByDate(date("Y-m-d", strtotime(str_replace('/','-',$request->dt_start))), date("Y-m-d",strtotime(str_replace('/','-',$request->dt_end))));
+    {
+        $dt_start   = date("Y-m-d", strtotime(str_replace('/','-',$request->dt_start)));
+        $dt_end     = date("Y-m-d",strtotime(str_replace('/','-',$request->dt_end)));
+
+        $start  = Carbon::parse($dt_start);
+        $end    = Carbon::parse($dt_end);
+        $diff = $end->lt($start);
+
+        if($diff == TRUE)
+        {
+            return response()->json(['message' => 'La fecha de inicio no puede ser mayor a la fecha fin'], 422);
+        }
+       
+        $data = Cuota::getClientsPaymentByDate($dt_start, $dt_end);
         #dd($data);
         $file_name = 'pagos_generados_'.date('Y_m_d');
         $sheet_name = 'pagos_'.date('Y_m_d');
