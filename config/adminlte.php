@@ -164,33 +164,39 @@ return [
         [
             'text'    => 'Gestión Crediticia',
             'icon'    => 'credit-card',
+            'permission'     => 'credit-management',
             'submenu' => [
                 [
-                    'text' => 'Generar nuevo crédito',
-                    'icon'    => 'chevron-right',
-                    'url'     => 'admin/new_credit',
+                    'text'          => 'Generar nuevo crédito',
+                    'icon'          => 'chevron-right',
+                    'url'           => 'admin/new_credit',
+                    'permission'    => 'new-credit'                   
                 ],
                 [
-                    'text'    => 'Cargas Masivas',
-                    'url'     => '#',
-                    'icon'    => 'chevron-right',
+                    'text'          => 'Cargas Masivas',
+                    'url'           => '#',
+                    'icon'          => 'chevron-right',
+                    'permission'    => 'massive-loads',
                     'submenu' => [
                         [
-                            'text' => 'Nueva carga masiva',
-                            'icon'    => 'chevron-right',
-                            'url'  => 'admin/massive_upload_credits',
+                            'text'          => 'Nueva carga masiva',
+                            'icon'          => 'chevron-right',
+                            'url'           => 'admin/massive_upload_credits',
+                            'permission'    => 'new-massive-load'
                         ],
                         [
-                            'text'    => "Histórico de cargas",
-                            'icon'    => 'chevron-right',
-                            'url'     => 'admin/uploads_history_report',
+                            'text'          => "Histórico de cargas",
+                            'icon'          => 'chevron-right',
+                            'url'           => 'admin/uploads_history_report',
+                            'permission'    => 'massive-load-history'
                         ],
                     ],
                 ],                
                 [
-                    'text'    => 'Tasas de Interés',
-                    'url'     => '#',
-                    'icon'    => 'chevron-right',
+                    'text'          => 'Tasas de Interés',
+                    'url'           => '#',
+                    'icon'          => 'chevron-right',
+                    'permission'    => 'interest-rate',
                     'submenu' => [
                         [
                             'text' => 'Nueva tasa',
@@ -218,31 +224,6 @@ return [
                 ],  
                                
                 // [
-                //     'text'    => 'Morosidad',
-                //     'url'     => '#',
-                //     'submenu' => [
-                //         [
-                //             'text' => 'Level Two',
-                //             'url'  => '#',
-                //         ],
-                //         [
-                //             'text'    => 'Level Two',
-                //             'url'     => '#',
-                //             'submenu' => [
-                //                 [
-                //                     'text' => 'Level Three',
-                //                     'url'  => '#',
-                //                 ],
-                //                 [
-                //                     'text' => 'Level Three',
-                //                     'url'  => '#',
-                //                 ],
-                //             ],
-                //         ],
-                //     ],
-                // ],
-
-                // [
                 //     'text'    => 'Planes de crédito',
                 //     'url'     => '#',
                 //     'submenu' => [
@@ -268,30 +249,35 @@ return [
                 // ],
 
                 [
-                    'text'    => 'Bases de Cálculo',
-                    'url'     => '#',
-                    'icon'    => 'chevron-right',
-                    
+                    'text'          => 'Bases de Cálculo',
+                    'url'           => '#',
+                    'icon'          => 'chevron-right',
+                    'permission'    =>  'calculation-basis',
                     'submenu' => [
                         [
-                            'text' => 'SISTEMA AMERICANO',
-                            'url'  => '#',
-                            'icon'    => 'chevron-right',
+                            'text'          =>  'Sistema Americano',
+                            'url'           =>  '#',
+                            'icon'          =>  'chevron-right',
+                            'permission'    =>  'american-system'
                         ],
                         [
-                            'text' => 'SISTEMA FRANCÉS',
-                            'url'  => '#',
-                            'icon'    => 'chevron-right',
+                            'text'          => 'Sistema Francés',
+                            'url'           => '#',
+                            'icon'          => 'chevron-right',
+                            'permission'    =>  'french-system'
+
                         ],
                         [
-                            'text' => 'SISTEMA ALEMÁN',
-                            'url'  => '#',
-                            'icon'    => 'chevron-right',
+                            'text'          => 'Sistema Alemán',
+                            'url'           => '#',
+                            'icon'          => 'chevron-right',
+                            'permission'    =>  'german-system'                            
                         ],
                         [
-                            'text' => 'CUOTA BALÓN',
-                            'url'  => '#',
-                            'icon'    => 'chevron-right',
+                            'text'          => 'Cuota Balón',
+                            'url'           => '#',
+                            'icon'          => 'chevron-right',
+                            'permission'    =>  'balloon-quote'
                         ],                                                                        
                         // [
                         //     'text'    => 'Level Two',
@@ -313,9 +299,10 @@ return [
                     ],
                 ],
                 [
-                    'text'    => 'Morosidad',
-                    'url'     => '#',
-                    'icon'    => 'chevron-right',
+                    'text'          => 'Morosidad',
+                    'url'           => '#',
+                    'icon'          => 'chevron-right',
+                    'permission'    =>  'morosity',
                     'submenu' => [
                         [
                             'text'          => 'Consultar clientes',
