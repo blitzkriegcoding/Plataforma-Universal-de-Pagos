@@ -143,13 +143,12 @@ class Cuota extends Model
         
         $payment['data'] = \DB::table('cuotas as t1')
                     ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
-                                        t1.nro_cuota, t1.valor_cuota, date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, t1.bill_number as boleta"))
+                                        t1.nro_cuota, cast(t1.valor_cuota as decimal(11,0)) as valor_cuota, date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, t1.bill_number as boleta"))
                     ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                     ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                     ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
                     ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
-                    ->whereNotNull('t1.bill_number')
-                    #->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
+                    ->whereNotNull('t1.bill_number')                    
                     ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                     ->orderBy('bill_number', 'asc')
                     ->get();
