@@ -8,13 +8,10 @@ function getPaymentsExcel()
         beforeSend: function() 
             {
                 $("#download_button").empty();
-            },                         
-        statusCode: {
-            200: function()
-            {
-                $("#download_button").append("<a href='#' class='btn btn-success' target='_self'> Descargar Pagos </a>");
-            }        
-        },
+                $("#download_button").append("<img src='/images/ellipsis.gif' class='img-responsive' alt='cargando...'>");              
+
+
+            },
         statusCode: {
             422:function(data)
             {
@@ -22,7 +19,7 @@ function getPaymentsExcel()
                     toastr.error(k);
                 });                
             }
-        }
+        },
         statusCode: {
             500: function(data)
             {
@@ -30,6 +27,10 @@ function getPaymentsExcel()
             }
         }
 
+    }).done(function(data){
+        var path = JSON.parse(data);
+        $("#download_button").empty();
+        $("#download_button").append("<a href='"+path.final_path+"' class='btn btn-success' target='_self'> Descargar Pagos </a>");        
     });
 }
 

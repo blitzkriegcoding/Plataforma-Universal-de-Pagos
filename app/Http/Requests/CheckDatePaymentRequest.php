@@ -25,18 +25,18 @@ class CheckDatePaymentRequest extends FormRequest
     {
         return [
             //
-            'date_start'    =>  'date_format: Y-m-d|required',
-            'date_end'      =>  'date_format: Y-m-d|required'  
+            'dt_start'    =>  'date_format: d/m/Y|required',
+            'dt_end'      =>  'date_format: d/m/Y|required'  
         ];
     }
 
     public function messages()
     {
         return [
-            'date_start.date_format'    => 'El campo de fecha de inicio tiene formato inválido',
-            'date_start.required'       => 'El campo de fecha de inicio es requerido',
-            'date_end.date_format'      => 'El campo de fecha final tiene formato inválido',
-            'date_end.required'         => 'El campo de fecha final es requerido',
+            'dt_start.date_format'    => 'El campo de fecha de inicio tiene formato inválido',
+            'dt_start.required'       => 'El campo de fecha de inicio es requerido',
+            'dt_end.date_format'      => 'El campo de fecha final tiene formato inválido',
+            'dt_end.required'         => 'El campo de fecha final es requerido',
         ];
     }
 }

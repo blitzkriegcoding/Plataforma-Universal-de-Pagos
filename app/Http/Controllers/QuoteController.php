@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Http\Requests\CreateQuoteRequest;
 use App\Http\Requests\CheckDatePaymentRequest;
+use Carbon\Carbon;
 use Excel;
 
 class QuoteController extends Controller
@@ -53,13 +54,21 @@ class QuoteController extends Controller
     }
 
     public function getPayments(CheckDatePaymentRequest $request)
-    {
-        $data = Cuota::getClientsPaymentByDate($request->dt_start, $request->dt_end);
-        return Excel::create('pagos_generados_'.date('Y_m_d'), function($excel) use ($data) {
-            $excel->sheet('pagos_'.date('Y_m_d'), function($sheet) use ($data)
+    {       
+        $data = Cuota::getClientsPaymentByDate(date("Y-m-d", strtotime(str_replace('/','-',$request->dt_start))), date("Y-m-d",strtotime(str_replace('/','-',$request->dt_end))));
+        #dd($data);
+        $file_name = 'pagos_generados_'.date('Y_m_d');
+        $sheet_name = 'pagos_'.date('Y_m_d');
+        $extension = 'xls';
+        $empresa = sha1(Empresa::getIdEmpresa());
+        Excel::create($file_name, function($excel) use ($data, $sheet_name) {
+            $excel->sheet($sheet_name, function($sheet) use ($data)
             {
                 $sheet->fromArray($data);
             });
-        })->store('xls', storage_path('exports_'.Empresa::getIdEmpresa()))->export();        
+        })->store('xls', public_path($empresa)) ; 
+
+        $path['final_path'] = '/'.$empresa.'/'.$file_name.'.'.$extension;
+        return json_encode($path);
     }
 }

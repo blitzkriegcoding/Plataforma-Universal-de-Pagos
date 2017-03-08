@@ -129,10 +129,19 @@ class Cuota extends Model
 
     public static function getClientsPaymentByDate($dt_start = NULL, $dt_end = NULL)
     {
-        if((NULL == $dt_start) || (NULL == $dt_end))
-            $date_start = $date_end = date('Y-m-d');
 
-        $payment = \DB::table('cuotas as t1')
+
+        if((NULL == $dt_start) || (NULL == $dt_end))
+        {            
+            $date_start = $date_end = date('Y-m-d');
+        }
+        else
+        {
+            $date_start = $dt_start;
+            $date_end = $dt_end;
+        }
+        
+        $payment['data'] = \DB::table('cuotas as t1')
                     ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
                                         t1.nro_cuota, t1.valor_cuota, date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, t1.bill_number as boleta"))
                     ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
@@ -141,11 +150,12 @@ class Cuota extends Model
                     ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
                     #->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
                     ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
-                    ->orderBy('cast(bill_number as decimal)', 'asc')
-                    ->get()
-                    ->toArray();
-
-        return $payment;
+                    ->orderBy('bill_number', 'asc')
+                    ->get();
+        $payment['data']->transform(function($item){
+            return (array)$item;
+        });
+        return $payment['data']->toArray();
     } 
 
 

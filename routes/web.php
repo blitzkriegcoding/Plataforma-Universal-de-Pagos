@@ -91,8 +91,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::post('get_excel_file', 				['as' => 'admin.get_excel_file', 			'uses' => 'QuoteController@getExcelFile']);
 		# Mostrar pagos del día
 		Route::post('get_payments',					['as' => 'admin.get_payments', 				'uses' => 'QuoteController@getPayments']);
-		# Mostrar pagos del día		
-		Route::post('get_payments_filtered',		['as' => 'admin.get_payments_filtered',		'uses' => 'QuoteController@getFilteredPayments']);
+		
 
 	}
 );

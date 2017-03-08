@@ -43,9 +43,9 @@
 			<div class="form-group">
 				<div class="row">
 					<div class=" col-sm-1 col-sm-offset-2">
-						{!! Form::button('Generar reporte', ['class' => 'btn btn-primary']) !!}
+						{!! Form::button('Generar reporte', ['class' => 'btn btn-primary', 'onclick' => 'getPaymentsExcel()']) !!}
 					</div>	
-					<div id="download_button" class="col-sm-2"></div>					
+					<div id="download_button" class="col-sm-1 col-sm-offset-1"></div>
 				</div>			
 			</div>
 

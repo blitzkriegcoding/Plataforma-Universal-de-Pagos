@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateClientRequest;
 
 use App\Cliente;
 use App\ClienteEmpresa;
+use App\Empresa;
 
 class ClientController extends Controller
 {
@@ -29,7 +30,7 @@ class ClientController extends Controller
         $new_client->direccion_cliente = $request->direccion_cliente;
     	$new_client->save();
 
-    	$cliente_empresa = ClienteEmpresa::firstOrCreate(['rut_cliente' => $request->rut_cliente, 'id_empresa' => 1]);
+    	$cliente_empresa = ClienteEmpresa::firstOrCreate(['rut_cliente' => $request->rut_cliente, 'id_empresa' => Empresa::getIdEmpresa()]);
     	flash('Cliente registrado con éxito', 'success');
     	return redirect()->route('admin.new_client');
     }
