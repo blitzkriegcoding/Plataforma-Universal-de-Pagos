@@ -144,19 +144,19 @@ return [
         [
             'text'    => 'Mantenedor de Clientes',
             'icon'    => 'tags',
-            'permission'     => 'manage-enterprises',
+            'permission'  => 'manage-blog',
             'submenu' => [
                 [
                     'text' => 'Nuevo Cliente',
                     'icon'    => 'chevron-right',
                     'url'  => 'admin/new_client',
-                    /*'permission'  => 'create-enterprise',*/
+                    'permission'  => 'create-enterprise',
                 ],
                 [
                     'text'    => 'Visualizar Clientes',
                     'icon'    => 'chevron-right',
                     'url'     => 'admin/report_clients',
-                    /*'permission'     => 'edit-enterprise',*/
+                    'permission'     => 'edit-enterprise',
                 ],                
 
             ],
@@ -271,6 +271,7 @@ return [
                     'text'    => 'Bases de Cálculo',
                     'url'     => '#',
                     'icon'    => 'chevron-right',
+                    
                     'submenu' => [
                         [
                             'text' => 'SISTEMA AMERICANO',
@@ -317,14 +318,16 @@ return [
                     'icon'    => 'chevron-right',
                     'submenu' => [
                         [
-                            'text' => 'Consultar clientes',
-                            'url'  => 'admin/view_client_quotes',
-                            'icon'    => 'chevron-right',
+                            'text'          => 'Consultar clientes',
+                            'url'           => 'admin/view_client_quotes',
+                            'icon'          => 'chevron-right',
+                            'permission'    => 'view-quotes',
                         ],
                         [
-                            'text' => 'Consultar pagos',
-                            'url'  => 'admin/view_clients_payments',
-                            'icon'    => 'chevron-right',
+                            'text'          => 'Consultar pagos',
+                            'url'           => 'admin/view_clients_payments',
+                            'icon'          => 'chevron-right',
+                            'permission'    => 'view-payments',
                         ],                        
                     ],
                 ],                
@@ -333,6 +336,7 @@ return [
         [
             'text'    => 'Mantenedor de usuarios',
             'icon'    => 'user',
+            'permission'  => 'manage-blog',
 
             'submenu' => [
                 [
@@ -361,6 +365,7 @@ return [
         [
             'text'    => 'Mantenedor de Canales',
             'icon'    => 'edit',
+            'permission'  => 'manage-blog',
             'submenu' => [
                             // [
                             //     'text' => 'Gestionar canales',
