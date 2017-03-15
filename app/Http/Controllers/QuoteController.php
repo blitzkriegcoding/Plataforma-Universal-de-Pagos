@@ -80,7 +80,7 @@ class QuoteController extends Controller
             });
         })->store('xls', public_path($empresa)) ; 
 
-        $path['final_path'] = '/'.$empresa.'/'.$file_name.'.'.$extension;
+        $path['final_path'] = "../".$empresa.'/'.$file_name.'.'.$extension;
         return json_encode($path);
     }
 }

@@ -2,12 +2,12 @@ function getPaymentsExcel()
 {    
    return $.ajax({
         type: "POST",
-        url: "/admin/get_payments",
+        url: "get_payments",
         data: {'dt_start': $('#date_start').val(), 'dt_end':$('#date_end').val() },
         beforeSend: function() 
             {
                 $("#download_button").empty();
-                $("#download_button").append("<div class='row'><span>Construyendo archivo...</span><img src='/images/squares.gif' class='img-responsive' alt='cargando...'></div>");              
+                $("#download_button").append("<div class='row'><span>Construyendo archivo...</span><img src='public/images/squares.gif' class='img-responsive' alt='cargando...'></div>");              
             },
         statusCode: {
             422: function(data)
@@ -28,6 +28,7 @@ function getPaymentsExcel()
 
     }).done(function(data){
         var path = JSON.parse(data);
+        console.log(path.final_path);
         $("#download_button").empty();
         $("#download_button").append("<a href='"+path.final_path+"' class='btn btn-success' target='_self'> Descargar Pagos </a>");        
     });
