@@ -37,7 +37,7 @@ class MassiveCreditLoaderController extends Controller
         $bulk_result = [];
     	$path_file = $request->file('lote_credito')->getRealPath();
     	$data_file = Excel::load($path_file, function($reader){})->get();
-    	if(!empty($data_file) && $data_file->count())
+    	if(!empty($data_file) && $data_file->count() > 0)
     	{
     		#dd($data_file->toArray());
     		foreach($data_file->toArray() as $key => $value)
