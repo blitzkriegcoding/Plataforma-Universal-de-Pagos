@@ -7,6 +7,7 @@ use App\Empresa;
 use App\PlanCuota;
 use App\InteresCuota;
 use Carbon\Carbon;
+use App\Events\AddInterestQuoteEvent;
 class Cuota extends Model
 {
     protected $table = 'cuotas';
@@ -122,9 +123,11 @@ class Cuota extends Model
 
     public static function createQuote($data)
     {
-        self::create(['nro_cuota' => $data->nro_cuota, 
+        $data_quote = self::create(['nro_cuota' => $data->nro_cuota, 
                 'valor_cuota' => $data->valor_cuota, 'activa' => $data->activa, 'status_cuota' => $data->status_cuota, 
                 'fecha_vencimiento' => (date('Y-m-d', strtotime($data->fecha_vencimiento))), 'id_plan_cuota' => $data->id_plan_cuota]);
+        
+        \Event::fire(new AddInterestQuoteEvent($data_quote->id_cuota));
     }
 
     public static function getClientsPaymentByDate($dt_start = NULL, $dt_end = NULL)
