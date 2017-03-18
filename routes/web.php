@@ -42,8 +42,9 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::get('del_item_from_loaded_lote', 	['as' => 'admin.del_item_from_loaded_lote', 'uses' 	=> 'ClientController@deleteItemFromLoadedLote']);
 		Route::get('view_client_quotes', 			['as' => 'admin.view_client_quotes', 		'uses' 	=> 'ClientController@viewClientQuotes']);
 		Route::get('view_clients_payments', 		['as' => 'admin.view_clients_payments', 	'uses'	=> 'QuoteController@viewClientsPayments']);
-		
 		Route::get('check', 						['as' => 'admin.check', 					'uses' 	=> 'TestController@check']);
+		Route::get('edit_user', 					['as' => 'admin.edit_user', 				'uses' 	=> 'UserController@editUser']);
+		Route::get('edit_password', 				['as' => 'admin.edit_password', 			'uses' 	=> 'UserController@editPassword']);
 
 		# Rutas por post #
 		Route::post('create_enterprise', 			['as' => 'admin.create_enterprise', 		'uses'	=> 'EnterpriseController@createEnterprise']);
@@ -62,7 +63,8 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::post('delete_quote', 				['as' => 'admin.delete_quote', 				'uses' 	=> 'QuoteController@deleteQuote']);
 		Route::post('create_quote', 				['as' => 'admin.create_quote', 				'uses' 	=> 'QuoteController@createQuote']);	
 		Route::post('create_user',					['as' => 'admin.create_user', 				'uses' 	=> 'ManageUserController@createNewUser']);
-
+		Route::post('update_user', 					['as' => 'admin.update_user', 				'uses' 	=> 'UserController@updateUser']);
+		Route::post('update_password', 				['as' => 'admin.update_password', 			'uses' 	=> 'UserController@updatePassword']);
 		# Para consultar cliente por rut para el select2
 		Route::post('get_client_by_rut', 			['as' => 'admin.get_client_by_rut', 		'uses' => 'ClientController@getClientByRut']);
 		# Para consultar cliente por rut para el select2

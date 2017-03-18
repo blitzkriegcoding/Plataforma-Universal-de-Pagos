@@ -379,12 +379,12 @@ return [
         'PERFIL DEL USUARIO',
         [
             'text' => 'Perfil',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/edit_user',
             'icon' => 'user',
         ],
         [
             'text' => 'Cambiar password',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/edit_password',
             'icon' => 'lock',
         ],
         // [
