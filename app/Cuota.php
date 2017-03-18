@@ -150,9 +150,9 @@ class Cuota extends Model
                                         date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, 
                                         date_format(t1.fecha_vencimiento, '%d-%m-%Y') as fecha_vencimiento_cuota,                                        
                                         cast(case 
-                                            when datediff(now(), t1.fecha_vencimiento) <= 0 then 0.00
-                                            when datediff(now(), t1.fecha_vencimiento) > 0 then datediff(now(), t1.fecha_vencimiento)
-                                        end as decimal) as dias_mora_hoy,
+                                            when datediff(t1.fecha_pago_efectivo, t1.fecha_vencimiento) <= 0 then 0.00
+                                            when datediff(t1.fecha_pago_efectivo, t1.fecha_vencimiento) > 0 then datediff(t1.fecha_pago_efectivo, t1.fecha_vencimiento)
+                                        end as decimal) as dias_mora,
                                         t2.nro_credito,
                                         t1.bill_number as boleta,
                                         t5.cod_transaccion_servipag as codigo_servipag
