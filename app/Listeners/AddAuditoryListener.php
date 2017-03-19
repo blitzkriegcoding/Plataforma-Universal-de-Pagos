@@ -6,7 +6,7 @@ use App\Events\SomeEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AddEventsAuditoryListener
+class AddAuditoryListener
 {
     /**
      * Create the event listener.
@@ -24,7 +24,7 @@ class AddEventsAuditoryListener
      * @param  SomeEvent  $event
      * @return void
      */
-    public function handle(AddEventsAuditory $event)
+    public function handle(AddAuditoryEvent $event)
     {
         //
     }

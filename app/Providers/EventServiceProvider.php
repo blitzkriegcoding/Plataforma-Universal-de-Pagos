@@ -18,7 +18,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\AddInterestQuoteEvent' => [
             'App\Listeners\AddInterestQuoteListener',
-        ],        
+        ], 
+        'App\Events\AddAuditoryEvent' => [
+            'App\Listeners\AddAuditoryListener',
+        ],                
     ];
 
     /**
