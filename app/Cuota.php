@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
+use DB;
+use Event;
 use App\Empresa;
 use App\PlanCuota;
 use App\InteresCuota;
 use Carbon\Carbon;
 use App\Events\AddInterestQuoteEvent;
+use App\Events\AddAuditoryEvent as Evt;
 class Cuota extends Model
 {
     protected $table = 'cuotas';
@@ -109,16 +113,20 @@ class Cuota extends Model
 
     public static function updateQuote($data)
     {
-        \DB::table('cuotas')
+        DB::table('cuotas')
             ->where('id_cuota', $data->id_cuota)
             ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
                 'activa' => strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
                 'fecha_vencimiento' => date('Y-m-d', strtotime($data->fecha_vencimiento))]);
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data_quote->id_cuota ];
+        Event::fire(new Evt($data_event));            
     }
 
     public static function deleteQuote($data)
     {
-        \DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
+        DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Borrado de la cuota id# '.$data_quote->id_cuota ];
+        Event::fire(new Evt($data_event));        
     }
 
     public static function createQuote($data)
@@ -127,7 +135,9 @@ class Cuota extends Model
                 'valor_cuota' => $data->valor_cuota, 'activa' => $data->activa, 'status_cuota' => $data->status_cuota, 
                 'fecha_vencimiento' => (date('Y-m-d', strtotime($data->fecha_vencimiento))), 'id_plan_cuota' => $data->id_plan_cuota]);
         
-        \Event::fire(new AddInterestQuoteEvent($data_quote->id_cuota));
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Creacion de la cuota id# '.$data_quote->id_cuota ];
+        Event::fire(new AddInterestQuoteEvent($data_quote->id_cuota));
+        Event::fire(new Evt($data_event));
     }
 
     public static function getClientsPaymentByDate($dt_start = NULL, $dt_end = NULL)

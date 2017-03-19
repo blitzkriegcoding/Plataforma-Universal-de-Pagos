@@ -11,7 +11,8 @@ use App\Empresa;
 use Auth;
 use Carbon\Carbon;
 use DB;
-
+use App\Events\AddAuditoryEvent as Evt;
+use Event;
 class PlanCuota extends Model
 {
     //
@@ -73,6 +74,8 @@ class PlanCuota extends Model
                         ->where('t1.id_plan_cuota', 'like', $data->id_plan_cuota)                        
                         ->get()
                         ->toArray();
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Consulta del plan id# '.$data->id_plan_cuota ];
+        Event::fire(new Evt($data_event));
         return $quote_plan;
     }
 
@@ -103,9 +106,13 @@ class PlanCuota extends Model
 
         if($quote_plan[0]->id_plan_cuota != null)
         {
+            $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Eliminación satisfactoria del plan id# '.$data->id_plan_cuota ];
+            
             self::find($quote_plan[0]->id_plan_cuota)->delete();
             return true;
         }
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Eliminación insatisfactoria del plan id# '.$data->id_plan_cuota ];
+        Event::fire(new Evt($data_event));            
         return false;
     }
 

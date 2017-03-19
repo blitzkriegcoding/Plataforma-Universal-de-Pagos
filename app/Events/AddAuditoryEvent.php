@@ -18,9 +18,22 @@ class AddAuditoryEvent
      *
      * @return void
      */
-    public function __construct()
+    private $data = null;
+
+    public function __construct($data)
     {
         //
+        $this->data = $data;
+    }
+
+    public function setData($data = [])
+    {
+        $this->data = $data;
+    }
+
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
