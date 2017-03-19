@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 use DB;
 class Cliente extends Model
 {
@@ -14,7 +15,7 @@ class Cliente extends Model
 
     private static function getIdEmpresa()
     {
-        $empresa = \Auth::user()->EmpresaUsuario == null? '%%' : \Auth::user()->EmpresaUsuario->id_empresa;
+        $empresa = Auth::user()->EmpresaUsuario == null? '%%' : Auth::user()->EmpresaUsuario->id_empresa;
         return $empresa;
     }
 
@@ -23,10 +24,12 @@ class Cliente extends Model
     	$clientes = DB::table('clientes as t1')
     	->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ',upper(apellido_cliente)) as datos_cliente, t2.id_cliente_cuota"))
     	->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
-        ->where('t2.id_empresa', 'like', self::getIdEmpresa() )
+        ->where('t2.id_empresa', '=', self::getIdEmpresa())
     	->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
     	->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
-    	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))->get()->toJson();
+    	->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->get()
+        ->toJson();
     	return $clientes;
     }
 
@@ -37,7 +40,7 @@ class Cliente extends Model
         ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
         ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
         ->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
-        ->where('t2.id_empresa', 'like', self::getIdEmpresa())
+        ->where('t2.id_empresa', '=', self::getIdEmpresa())
         ->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
         ->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
         ->orWhere('nro_credito', 'like', strtoupper(trim("%$rut_cliente%")))

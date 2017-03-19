@@ -66,6 +66,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['auth']], function()
 		Route::post('create_user',					['as' => 'admin.create_user', 				'uses' 	=> 'ManageUserController@createNewUser']);
 		Route::post('update_user', 					['as' => 'admin.update_user', 				'uses' 	=> 'UserController@updateUser']);
 		Route::post('update_password', 				['as' => 'admin.update_password', 			'uses' 	=> 'UserController@updatePassword']);
+		Route::post('update_plan', 					['as' => 'admin.update_plan', 				'uses' 	=> 'PlanQuoteController@updatePlan']);
 		Route::post('delete_plan', 					['as' => 'admin.delete_plan', 				'uses' 	=> 'PlanQuoteController@deletePlan']);
 		
 		# Para consultar cliente por rut para el select2

@@ -116,5 +116,24 @@ class PlanCuota extends Model
         return false;
     }
 
+    public static function updatePlan($data)
+    {
+        $plan = self::find($data->id_plan_cuota);
+        if($plan->id_plan_cuota != null)
+        {
+            $plan->paquete                  = $data->paquete;
+            $plan->cantidad_cuotas          = $data->cuotas;
+            $plan->fecha_termino_contrato   = $data->vencimiento;
+            $plan->nro_credito              = $data->credito;
+            $plan->save();
+            $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Edicion satisfactoria del plan id# '.$data->id_plan_cuota ];                
+            return true;            
+        }
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Edicion insatisfactoria del plan id# '.$data->id_plan_cuota ];
+        Event::fire(new Evt($data_event));
+        return false;
+        
+    }
+
     
 }

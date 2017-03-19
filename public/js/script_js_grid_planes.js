@@ -91,7 +91,8 @@ function getPlan()
                             },
                             200: function(data){
                                 //return false;
-                                toastr.success('Cuota actualizada con éxito');
+                                toastr.success('Plan de cuotas actualizado con éxito');
+                                getPlan();
                                 return;
                             },
                             500: function(data)
@@ -115,10 +116,11 @@ function getPlan()
                                 });
                             },
                             200: function(data){
-                                //return false;
                                 $.each(data.responseJSON, function(i,k){                                    
                                     toastr.success(k);
                                 });
+                                getPlan();
+                                return false;
                             },
                             500: function(data)
                             {

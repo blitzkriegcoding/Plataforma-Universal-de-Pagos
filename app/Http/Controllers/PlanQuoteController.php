@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateCreditRequest;
+use App\Http\Requests\PlanQuoteRequest;
 
 use App\PlanCuota;
 use App\Cuota;
@@ -50,6 +51,12 @@ class PlanQuoteController extends Controller
         {
             return response()->json(['mensaje' => 'Plan de crédito no encontrado'], 404);   
         }
+    }
+
+    public function updatePlan(PlanQuoteRequest $request)
+    {
+        // dd($_POST);
+        PlanCuota::updatePlan($request);
     }
 
 
