@@ -142,8 +142,6 @@ class Cuota extends Model
             $date_end = $dt_end;
         }
 
-
-        
         $payment['data'] = \DB::table('cuotas as t1')
                     ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
                                         t1.nro_cuota, cast(t1.valor_cuota as decimal(11,0)) as valor_cuota, 

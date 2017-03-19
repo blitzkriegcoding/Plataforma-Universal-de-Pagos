@@ -32,7 +32,6 @@ class Cliente extends Model
 
     public static function getQuotePlanClientByRut($rut_cliente = NULL)
     {
-        // \Auth::user()->EmpresaUsuario->id_empresa
         $clientes = DB::table('clientes as t1')
         ->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ', upper(apellido_cliente), ' - CREDITO N°: ', t3.nro_credito) as datos_cliente, t3.id_plan_cuota"))
         ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
@@ -41,9 +40,9 @@ class Cliente extends Model
         ->where('t2.id_empresa', 'like', self::getIdEmpresa())
         ->orWhere('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
         ->orWhere('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->orWhere('nro_credito', 'like', strtoupper(trim("%$rut_cliente%")))
         ->get()
-        ->toJson();
-        
+        ->toJson();        
         return $clientes;      
     }
    

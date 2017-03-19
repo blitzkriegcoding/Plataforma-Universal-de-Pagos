@@ -315,6 +315,12 @@ return [
                             'url'           => 'admin/view_clients_payments',
                             'icon'          => 'chevron-right',
                             'permission'    => 'view-payments',
+                        ],
+                        [
+                            'text'          => 'Consultar Planes de crédito',
+                            'url'           => 'admin/view_plans',
+                            'icon'          => 'chevron-right',
+                            'permission'    => 'view-plans',
                         ],                        
                     ],
                 ],                

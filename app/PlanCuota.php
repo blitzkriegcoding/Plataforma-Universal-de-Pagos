@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 use App\InteresCuota;
 use App\InteresDiario;
 use App\InteresMensual;
 use App\Cuota;
+use App\Empresa;
+use Auth;
+use Carbon\Carbon;
+use DB;
+
 class PlanCuota extends Model
 {
     //
@@ -33,8 +37,8 @@ class PlanCuota extends Model
 
     public static function addNewClientQuotePlan($id_carga)
     {
-        $new_quote_plans = \DB::table('clientes_empresas as t1')
-                            ->select(\DB::raw("distinct t1.id_cliente_cuota as id_cliente_cuota, 'GENERICO' as paquete, 
+        $new_quote_plans = DB::table('clientes_empresas as t1')
+                            ->select(DB::raw("distinct t1.id_cliente_cuota as id_cliente_cuota, 'GENERICO' as paquete, 
                                 count(t2.nro_cuota) as cantidad_cuotas, max(t2.fecha_vencimiento) as fecha_termino_contrato, 
                                 t2.nro_credito as nro_credito, (max(t2.interes) + max(t2.saldo_insoluto)) as total_credito"))
                             ->join('lotes_creditos as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
@@ -58,6 +62,51 @@ class PlanCuota extends Model
         $result = self::insert($array_new_quote_plans);
         session(['total_credit_plans' => count($array_new_quote_plans)]);
         return $result;     
+    }
+
+    public static function getPlan($data)
+    {
+        $quote_plan = DB::table('plan_cuotas as t1')
+                        ->select(DB::raw('t1.cantidad_cuotas as cuotas, t1.paquete, t1.fecha_termino_contrato as vencimiento, t1.nro_credito as credito, t1.id_plan_cuota'))
+                        ->join('clientes_empresas as t2', 't1.id_cliente_cuota', '=', 't2.id_cliente_cuota')
+                        ->where('t2.id_empresa', '=', Empresa::getIdEmpresa())                        
+                        ->where('t1.id_plan_cuota', 'like', $data->id_plan_cuota)                        
+                        ->get()
+                        ->toArray();
+        return $quote_plan;
+    }
+
+    public static function getFilteredPlan($data)
+    {
+        $quote_plan = DB::table('plan_cuotas as t1')
+                        ->select(DB::raw('t1.cantidad_cuotas as cuotas, t1.paquete, t1.fecha_termino_contrato as vencimiento, t1.nro_credito as credito, t1.id_plan_cuota'))
+                        ->join('clientes_empresas as t2', 't1.id_cliente_cuota', '=', 't2.id_cliente_cuota')
+                        ->where('t2.id_empresa', '=', Empresa::getIdEmpresa())
+                        ->where('t1.id_plan_cuota', 'like', $data->id_plan_cuota)
+                        ->where('t1.cantidad_cuotas', 'like', '%'.strtoupper($data->cantidad_cuotas).'%')
+                        ->where('t1.paquete', 'like', '%'.strtoupper($data->paquete).'%')
+                        ->where('t1.fecha_termino_contrato', 'like', '%'.strtoupper($data->vencimiento).'%')
+                        ->where('t1.nro_credito', 'like', '%'.strtoupper($data->credito).'%')
+                        ->get()
+                        ->toArray();
+        return $quote_plan;
+    }    
+
+    public static function deletePlan($data)
+    {
+        $quote_plan = DB::table('plan_cuotas as t1')
+                        ->select(DB::raw('t1.cantidad_cuotas as cuotas, t1.paquete, t1.fecha_termino_contrato as vencimiento, t1.nro_credito as credito, t1.id_plan_cuota'))
+                        ->join('clientes_empresas as t2', 't1.id_cliente_cuota', '=', 't2.id_cliente_cuota')
+                        ->where('t2.id_empresa', '=', Empresa::getIdEmpresa())
+                        ->where('t1.id_plan_cuota', '=', $data->id_plan_cuota)
+                        ->get();
+
+        if($quote_plan[0]->id_plan_cuota != null)
+        {
+            self::find($quote_plan[0]->id_plan_cuota)->delete();
+            return true;
+        }
+        return false;
     }
 
     
