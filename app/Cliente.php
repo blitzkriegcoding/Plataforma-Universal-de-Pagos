@@ -41,9 +41,9 @@ class Cliente extends Model
         ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
         ->where('t2.rut_cliente', 'like', trim($rut_cliente).'%')
         ->where('t2.id_empresa', '=', self::getIdEmpresa())
-        ->where('nombre_cliente', 'like', '%'.trim($rut_cliente%).'%')
-        ->where('apellido_cliente', 'like', '%'.trim($rut_cliente%).'%')
-        ->where('nro_credito', 'like', '%'.trim($rut_cliente%).'%')
+        ->where('nombre_cliente', 'like', '%'.trim($rut_cliente).'%')
+        ->where('apellido_cliente', 'like', '%'.trim($rut_cliente).'%')
+        ->where('nro_credito', 'like', '%'.trim($rut_cliente).'%')
         ->get()
         ->toJson();        
         return $clientes;      
