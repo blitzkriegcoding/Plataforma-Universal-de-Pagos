@@ -25,9 +25,9 @@ class Cliente extends Model
     	->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ',upper(apellido_cliente)) as datos_cliente, t2.id_cliente_cuota"))
     	->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
         ->where('t2.id_empresa', '=', self::getIdEmpresa())
-    	->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
-    	->where('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
-    	->where('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
+    	->where('t2.rut_cliente', 'like', trim($rut_cliente).'%')
+    	->where('nombre_cliente', 'like', '%'.strtoupper(trim($rut_cliente)).'%')
+    	->where('apellido_cliente', 'like', '%'.strtoupper(trim($rut_cliente)).'%')
         ->get()
         ->toJson();
     	return $clientes;
@@ -39,11 +39,11 @@ class Cliente extends Model
         ->select(DB::raw("concat(t2.rut_cliente,' - ',upper(nombre_cliente), ' ', upper(apellido_cliente), ' - CREDITO N°: ', t3.nro_credito) as datos_cliente, t3.id_plan_cuota"))
         ->join('clientes_empresas as t2', 't1.rut_cliente', '=', 't2.rut_cliente')
         ->join('plan_cuotas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
-        ->where('t2.rut_cliente', 'like', trim("$rut_cliente%"))
+        ->where('t2.rut_cliente', 'like', trim($rut_cliente).'%')
         ->where('t2.id_empresa', '=', self::getIdEmpresa())
-        ->where('nombre_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
-        ->where('apellido_cliente', 'like', strtoupper(trim("%$rut_cliente%")))
-        ->where('nro_credito', 'like', strtoupper(trim("%$rut_cliente%")))
+        ->where('nombre_cliente', 'like', '%'.trim($rut_cliente%).'%')
+        ->where('apellido_cliente', 'like', '%'.trim($rut_cliente%).'%')
+        ->where('nro_credito', 'like', '%'.trim($rut_cliente%).'%')
         ->get()
         ->toJson();        
         return $clientes;      
