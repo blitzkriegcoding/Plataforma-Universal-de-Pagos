@@ -11,17 +11,13 @@ class ValorUf extends Model
     protected $fillable = ['valor_uf', 'fecha'];
     public $timestamps = false;
 
-    
-
     public static function getApiRoute($index, $date = NULL)
     {
     	$_date = $date == NULL ? date('d-m-Y'):$date;
-
     	$f = ['uf' => ('http://mindicador.cl/api/uf/'.$_date), 'dolar' => ('http://mindicador.cl/api/dolar/'.$_date) ];
     	if(array_key_exists ($index, $f) == TRUE)
     		return $f[$index];
     	return NULL;
-
     }
 
     public static function addNewValues($date = NULL)
@@ -37,5 +33,4 @@ class ValorUf extends Model
     	}
     	return $new_values;
     }
-
 }
