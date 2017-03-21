@@ -45,8 +45,7 @@ class Cliente extends Model
         ->orWhere('apellido_cliente', 'like', strtoupper($rut_cliente == ''? '%%':$rut_cliente.'%'))
         ->orWhere('nro_credito', 'like', strtoupper($rut_cliente == ''? '%%':$rut_cliente.'%'))
         ->get()
-        ->toJson();
-        dd($rut_cliente);        
+        ->toJson();        
         return $clientes;      
     }
    
