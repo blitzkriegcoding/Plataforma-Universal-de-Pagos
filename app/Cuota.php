@@ -117,9 +117,12 @@ class Cuota extends Model
 		dd(date('Y-m-d', strtotime($data->fecha_vencimiento)));
 		$data_quote = DB::table('cuotas')
 		    ->where('id_cuota', $data->id_cuota)
-		    ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
-		        'activa' => strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
-		        'fecha_vencimiento' => date('Y-m-d', strtotime($data->fecha_vencimiento)) ]);
+		    ->update(['nro_cuota' 		=> $data->nro_cuota, 
+		    	'valor_cuota' 			=> $data->valor_cuota, 
+		        'activa' 				=> strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
+		        'fecha_vencimiento' 	=> date('Y-m-d', strtotime($data->fecha_vencimiento)),
+		        'fecha_pago_efectivo' 	=> date('Y-m-d', strtotime($data->fecha_pago_efectivo))
+		        ]);
 		$data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data->id_cuota ];
 		Event::fire(new Evt($data_event));            
     }
