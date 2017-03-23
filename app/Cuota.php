@@ -169,7 +169,12 @@ class Cuota extends Model
                                         end as decimal) as dias_mora,
                                         t2.nro_credito,
                                         t1.bill_number as boleta,
-                                        t5.cod_transaccion_servipag as codigo_servipag
+                                        case t5.cod_transaccion_servipag 
+                                        	when t5.cod_transaccion_servipag then 'PAGO DIRECTO EN OFICINA'
+                                        	else 
+                                        		 t5.cod_transaccion_servipag
+                                        end
+                                        as codigo_servipag
                                         "))
                     ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                     ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
