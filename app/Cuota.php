@@ -64,7 +64,7 @@ class Cuota extends Model
                 ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
                     t1.status_cuota, 
                     date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
-                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo'))
+                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo, t1.bill_number'))
                 ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
@@ -83,7 +83,7 @@ class Cuota extends Model
                 ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
                     t1.status_cuota, 
                     date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
-                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo'))
+                    date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo, t1.bill_number'))
                 ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                 ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                 ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
