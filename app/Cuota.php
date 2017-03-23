@@ -73,7 +73,7 @@ class Cuota extends Model
                 ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())                
                 ->orderBy('t1.nro_cuota')
                 ->get()->toArray();
-               
+
         return $quotes;
     }
 
@@ -114,6 +114,7 @@ class Cuota extends Model
 
     public static function updateQuote($data)
     {
+    	dd($data->fecha_vencimiento);
        $data_quote = DB::table('cuotas')
             ->where('id_cuota', $data->id_cuota)
             ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
