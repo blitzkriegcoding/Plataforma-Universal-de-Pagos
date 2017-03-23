@@ -113,10 +113,7 @@ class Cuota extends Model
     }
 
     public static function updateQuote($data)
-	{
-		dd($data->bill_number);
-
-		
+	{	
 		$data_quote = DB::table('cuotas')
 		    ->where('id_cuota', $data->id_cuota)
 		    ->update(['nro_cuota' 		=> $data->nro_cuota, 
@@ -124,7 +121,7 @@ class Cuota extends Model
 		        'activa' 				=> strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
 		        'fecha_vencimiento' 	=> date('Y-m-d', strtotime($data->fecha_vencimiento)),
 		        'fecha_pago_efectivo' 	=> $data->fecha_pago_efectivo != null? date('Y-m-d', strtotime($data->fecha_pago_efectivo)):null,
-		        'bill_number' 			=> $data->bill_number != null? $data->bill_number:null,
+		        'bill_number' 			=> $data->bill_number != (null || '')? $data->bill_number:null,
 
 		        ]);
 		$data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data->id_cuota ];
