@@ -120,7 +120,9 @@ class Cuota extends Model
 		    	'valor_cuota' 			=> $data->valor_cuota, 
 		        'activa' 				=> strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
 		        'fecha_vencimiento' 	=> date('Y-m-d', strtotime($data->fecha_vencimiento)),
-		        'fecha_pago_efectivo' 	=> date('Y-m-d', strtotime($data->fecha_pago_efectivo))
+		        'fecha_pago_efectivo' 	=> $data->fecha_pago_efectivo != null? date('Y-m-d', strtotime($data->fecha_pago_efectivo)):null,
+		        'bill_number' 			=> $data->bill_number != null? $data->bill_number:null,
+
 		        ]);
 		$data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data->id_cuota ];
 		Event::fire(new Evt($data_event));            
