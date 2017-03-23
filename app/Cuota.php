@@ -115,6 +115,8 @@ class Cuota extends Model
     public static function updateQuote($data)
 	{
 		dd($data->bill_number);
+
+		
 		$data_quote = DB::table('cuotas')
 		    ->where('id_cuota', $data->id_cuota)
 		    ->update(['nro_cuota' 		=> $data->nro_cuota, 
