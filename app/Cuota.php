@@ -12,7 +12,7 @@ use App\InteresCuota;
 use Carbon\Carbon;
 use App\Events\AddInterestQuoteEvent;
 use App\Events\AddAuditoryEvent as Evt;
-use DB;
+
 class Cuota extends Model
 {
     protected $table = 'cuotas';
@@ -32,8 +32,8 @@ class Cuota extends Model
     {
         $result = NULL;
 
-        $new_quotes = DB::table('lotes_creditos as t1')
-                        ->select(DB::raw("distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number"))
+        $new_quotes = \DB::table('lotes_creditos as t1')
+                        ->select(\DB::raw("distinct t1.nro_cuota, t1.valor_cuota, 'F' as activa,'SIN PAGAR' as status_cuota, t1.fecha_vencimiento, NULL as fecha_pago_efectivo, t2.id_plan_cuota, NULL as en_proceso, NULL as bill_number"))
                         ->join('plan_cuotas as t2', 't1.nro_credito','=','t2.nro_credito')
                         ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                         ->leftJoin('cuotas as t4', 't2.id_plan_cuota', '=', 't4.id_plan_cuota')
@@ -61,8 +61,8 @@ class Cuota extends Model
 
     public static function getClientQuotes($data)
     {
-        $quotes = DB::table('cuotas as t1')
-                ->select(DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+        $quotes = \DB::table('cuotas as t1')
+                ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
                     t1.status_cuota, 
                     date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
                     date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo, t1.bill_number'))
@@ -81,7 +81,7 @@ class Cuota extends Model
     public static function getFilteredQuotes($data)
     {
         $quotes = DB::table('cuotas as t1')
-                ->select(DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
+                ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
                     t1.status_cuota, 
                     date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
                     date_format(t1.fecha_pago_efectivo,"%d-%m-%Y") as fecha_pago_efectivo, t1.bill_number'))
@@ -159,8 +159,8 @@ class Cuota extends Model
             $date_end = $dt_end;
         }
 
-        $payment['data'] = DB::table('cuotas as t1')
-                    ->select(DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
+        $payment['data'] = \DB::table('cuotas as t1')
+                    ->select(\DB::raw("t1.status_cuota, concat(t4.nombre_cliente, ' ', t4.apellido_cliente) as nombres, 
                                         t1.nro_cuota, cast(t1.valor_cuota as decimal(11,0)) as valor_cuota, 
                                         date_format(t1.fecha_pago_efectivo, '%d-%m-%Y') as fecha_pago, 
                                         date_format(t1.fecha_vencimiento, '%d-%m-%Y') as fecha_vencimiento_cuota,                                        
@@ -173,6 +173,7 @@ class Cuota extends Model
                                         case t5.cod_transaccion_servipag 
                                         	when t5.cod_transaccion_servipag is NULL then 'PAGO DIRECTO EN OFICINA'
                                         	when t5.cod_transaccion_servipag like '' then 'PAGO DIRECTO EN OFICINA'
+                                        	when t5.cod_transaccion_servipag =    '' then 'PAGO DIRECTO EN OFICINA'
                                         	when t5.cod_transaccion_servipag then t5.cod_transaccion_servipag                                        		 
                                         end
                                         as codigo_servipag
