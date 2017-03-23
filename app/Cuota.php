@@ -73,12 +73,13 @@ class Cuota extends Model
                 ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())                
                 ->orderBy('t1.nro_cuota')
                 ->get()->toArray();
+               
         return $quotes;
     }
 
     public static function getFilteredQuotes($data)
     {
-        $quotes = \DB::table('cuotas as t1')
+        $quotes = DB::table('cuotas as t1')
                 ->select(\DB::raw('t1.id_cuota, t1.id_plan_cuota, t1.nro_cuota, t1.valor_cuota, t1.activa, 
                     t1.status_cuota, 
                     date_format(t1.fecha_vencimiento,"%d-%m-%Y") as fecha_vencimiento, 
@@ -113,7 +114,7 @@ class Cuota extends Model
 
     public static function updateQuote($data)
     {
-        DB::table('cuotas')
+       $data_quote = DB::table('cuotas')
             ->where('id_cuota', $data->id_cuota)
             ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
                 'activa' => strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
@@ -124,7 +125,7 @@ class Cuota extends Model
 
     public static function deleteQuote($data)
     {
-        DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
+        $data_quote = DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
         $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Borrado de la cuota id# '.$data_quote->id_cuota ];
         Event::fire(new Evt($data_event));        
     }
