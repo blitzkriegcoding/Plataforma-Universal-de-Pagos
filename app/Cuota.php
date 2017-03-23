@@ -119,14 +119,14 @@ class Cuota extends Model
             ->update(['nro_cuota' => $data->nro_cuota, 'valor_cuota' => $data->valor_cuota, 
                 'activa' => strtoupper($data->activa), 'status_cuota' => strtoupper($data->status_cuota), 
                 'fecha_vencimiento' => date('Y-m-d', strtotime($data->fecha_vencimiento))]);
-        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data_quote->id_cuota ];
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Actualización de la cuota id# '.$data->id_cuota ];
         Event::fire(new Evt($data_event));            
     }
 
     public static function deleteQuote($data)
     {
         $data_quote = DB::table('cuotas')->where('id_cuota', '=', $data->id_cuota)->delete();
-        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Borrado de la cuota id# '.$data_quote->id_cuota ];
+        $data_event = ['usuario' => Auth::user()->rut_usuario, 'evento' => 'Borrado de la cuota id# '.$data->id_cuota ];
         Event::fire(new Evt($data_event));        
     }
 
