@@ -114,7 +114,6 @@ class Cuota extends Model
 
     public static function updateQuote($data)
 	{
-		dd(date('Y-m-d', strtotime($data->fecha_vencimiento)));
 		$data_quote = DB::table('cuotas')
 		    ->where('id_cuota', $data->id_cuota)
 		    ->update(['nro_cuota' 		=> $data->nro_cuota, 
