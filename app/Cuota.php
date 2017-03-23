@@ -171,6 +171,7 @@ class Cuota extends Model
                                         t1.bill_number as boleta,
                                         case t5.cod_transaccion_servipag 
                                         	when t5.cod_transaccion_servipag is null then 'PAGO DIRECTO EN OFICINA'
+                                        	when t5.cod_transaccion_servipag like '' then 'PAGO DIRECTO EN OFICINA'
                                         	when t5.cod_transaccion_servipag then t5.cod_transaccion_servipag                                        		 
                                         end
                                         as codigo_servipag
