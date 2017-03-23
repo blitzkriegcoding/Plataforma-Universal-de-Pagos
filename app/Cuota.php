@@ -174,7 +174,7 @@ class Cuota extends Model
                     ->join('plan_cuotas as t2', 't1.id_plan_cuota', '=', 't2.id_plan_cuota')
                     ->join('clientes_empresas as t3', 't2.id_cliente_cuota', '=', 't3.id_cliente_cuota')
                     ->join('clientes as t4', 't3.rut_cliente', '=', 't4.rut_cliente')
-                    ->join('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
+                    ->leftJoin('transacciones_finales as t5', 't1.bill_number', '=', 't5.cod_transaccion_pup')
                     ->whereBetween('t1.fecha_pago_efectivo', [$date_start, $date_end])
                     ->whereNotNull('t1.bill_number')                    
                     ->where('t3.id_empresa', '=', Empresa::getIdEmpresa())
