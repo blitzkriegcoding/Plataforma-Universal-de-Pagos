@@ -170,11 +170,10 @@ class Cuota extends Model
                                         end as decimal) as dias_mora,
                                         t2.nro_credito,
                                         t1.bill_number as boleta,
-                                        case t5.cod_transaccion_servipag 
-                                        	when t5.cod_transaccion_servipag is NULL then 'PAGO DIRECTO EN OFICINA'
-                                        	when t5.cod_transaccion_servipag like '' then 'PAGO DIRECTO EN OFICINA'
-                                        	when t5.cod_transaccion_servipag =    '' then 'PAGO DIRECTO EN OFICINA'
-                                        	when t5.cod_transaccion_servipag then t5.cod_transaccion_servipag                                        		 
+                                        case t5.cod_transaccion_servipag     
+                                        	when t5.cod_transaccion_servipag not null then t5.cod_transaccion_servipag
+                                        	else
+                                        		'PAGO DIRECTO EN OFICINA'
                                         end
                                         as codigo_servipag
                                         "))
